@@ -1,0 +1,23 @@
+@import "variables";
+@import "../../node_modules/bootstrap/scss/bootstrap";
+
+$fa-font-path: "~@fortawesome/fontawesome-free-webfonts/webfonts";
+@import "~@fortawesome/fontawesome-free-webfonts/scss/fontawesome.scss";
+@import "~@fortawesome/fontawesome-free-webfonts/scss/fa-solid.scss";
+@import "~@fortawesome/fontawesome-free-webfonts/scss/fa-regular.scss";
+@import "~@fortawesome/fontawesome-free-webfonts/scss/fa-brands.scss";
+
+@import "base";
+@import "form";
+
+// Components
+@import "./components/customs/confirm-modal";
+@import "./components/customs/custom-scrollbars";
+@import "./components/customs/custom-toast";
+@import "./components/customs/date-picker";
+@import "./components/customs/input-suggest";
+@import "./components/system/navigator";
+@import "./components/system/header";
+
+// Pages
+@import "./pages/login";
