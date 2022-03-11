@@ -1,24 +1,23 @@
-import React, { Component, Fragment } from "react";
-import { connect } from "react-redux";
-import { Route, Switch } from "react-router-dom";
-import { ConnectedRouter as Router } from "connected-react-router";
-import { history } from "../redux";
-import { ToastContainer } from "react-toastify";
+import React, { Component, Fragment } from 'react';
+import { connect } from 'react-redux';
+import { Route, Switch } from 'react-router-dom';
+import { ConnectedRouter as Router } from 'connected-react-router';
+import { history } from '../redux';
+import { ToastContainer } from 'react-toastify';
 
 import {
     userIsAuthenticated,
     userIsNotAuthenticated,
-} from "../hoc/authentication";
+} from '../hoc/authentication';
 
-import { path } from "../utils";
+import { path } from '../utils';
 
-import Home from "../pages/system/Home";
-import Login from "../pages/Login";
-import Header from "../components/System/Header/Header";
-import System from "../routes/System";
+import Client from '../routes/Client';
+import Login from '../pages/Login';
+import System from '../routes/System';
 
-import { CustomToastCloseButton } from "../components/Customs/CustomToast";
-import ConfirmModal from "../components/Customs/ConfirmModal";
+import { CustomToastCloseButton } from '../components/Customs/CustomToast';
+import ConfirmModal from '../components/Customs/ConfirmModal';
 
 class App extends Component {
     handlePersistorState = () => {
@@ -40,19 +39,18 @@ class App extends Component {
     }
 
     render() {
+        console.log('App');
         return (
             <Fragment>
                 <Router history={history}>
                     <div className="main-container">
                         <ConfirmModal />
-                        {this.props.isLoggedIn && <Header />}
-
-                        <span className="content-container">
+                        <div className="content-container">
                             <Switch>
                                 <Route
                                     path={path.HOME}
                                     exact
-                                    component={Home}
+                                    component={Client}
                                 />
                                 <Route
                                     path={path.LOGIN}
@@ -63,7 +61,7 @@ class App extends Component {
                                     component={userIsAuthenticated(System)}
                                 />
                             </Switch>
-                        </span>
+                        </div>
                         <ToastContainer
                             className="toast-container"
                             toastClassName="toast-item"
