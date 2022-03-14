@@ -5,9 +5,7 @@
 }
 
 .header {
-    border: 1px solid red;
     &__top {
-        border: 1px solid black;
         height: 60px;
         display: flex;
         align-items: center;
@@ -70,6 +68,25 @@
     }
     &__bottom {
         height: 40px;
-        border: 1px solid gray;
+        &__menu {
+            margin-top: 8px;
+            display: flex;
+            align-items: center;
+            color: #fff;
+            gap: 20px;
+            &__item {
+                transition: all linear 0.1s;
+                &:hover {
+                    color: #ddd;
+                }
+                cursor: pointer;
+                text-transform: uppercase;
+                display: flex;
+                align-items: center;
+                i {
+                    margin-right: 5px;
+                }
+            }
+        }
     }
 }

@@ -18,6 +18,8 @@ import System from '../routes/System';
 
 import { CustomToastCloseButton } from '../components/Customs/CustomToast';
 import ConfirmModal from '../components/Customs/ConfirmModal';
+import CustomScrollbars from '../components/Customs/CustomScrollbars';
+import DetailProduct from '../pages/client/DetailProduct';
 
 class App extends Component {
     handlePersistorState = () => {
@@ -39,28 +41,35 @@ class App extends Component {
     }
 
     render() {
-        console.log('App');
         return (
             <Fragment>
                 <Router history={history}>
                     <div className="main-container">
                         <ConfirmModal />
                         <div className="content-container">
-                            <Switch>
-                                <Route
-                                    path={path.HOME}
-                                    exact
-                                    component={Client}
-                                />
-                                <Route
-                                    path={path.LOGIN}
-                                    component={userIsNotAuthenticated(Login)}
-                                />
-                                <Route
-                                    path={path.SYSTEM}
-                                    component={userIsAuthenticated(System)}
-                                />
-                            </Switch>
+                            <CustomScrollbars style={{ height: '100vh' }}>
+                                <Switch>
+                                    <Route
+                                        path={path.HOME}
+                                        exact
+                                        component={Client}
+                                    />
+                                    <Route
+                                        path="/detail-product"
+                                        component={DetailProduct}
+                                    />
+                                    <Route
+                                        path={path.LOGIN}
+                                        component={userIsNotAuthenticated(
+                                            Login
+                                        )}
+                                    />
+                                    <Route
+                                        path={path.SYSTEM}
+                                        component={userIsAuthenticated(System)}
+                                    />
+                                </Switch>
+                            </CustomScrollbars>
                         </div>
                         <ToastContainer
                             className="toast-container"

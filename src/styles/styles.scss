@@ -20,6 +20,10 @@ $fa-font-path: '~@fortawesome/fontawesome-free-webfonts/webfonts';
 @import './components/system/header';
 @import './components/client/header';
 @import './components/client/footer';
+@import './components/client/product';
+@import './components/client/promotion-phone';
+@import './components/client/all-product';
+@import './components/client/sidebar-item';
 
 // Pages
 @import './pages/login';
