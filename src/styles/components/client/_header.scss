@@ -54,6 +54,8 @@
             }
         }
         &__cart {
+            position: relative;
+            z-index: 0;
             cursor: pointer;
             display: flex;
             align-items: baseline;
@@ -63,6 +65,18 @@
             }
             span {
                 font-size: 12px;
+            }
+            &__count {
+                z-index: 1;
+                top: -10px;
+                left: 15px;
+                position: absolute;
+                font-size: 30px;
+                font-weight: 600;
+                padding: 3px 10px;
+                border-radius: 100px;
+                background-color: yellow;
+                color: #000;
             }
         }
     }

@@ -1,9 +1,10 @@
-import { useHistory } from 'react-router';
+import { useHistory } from "react-router";
 
-import logo from '../../assets/images/logo.png';
+import logo from "../../assets/images/logo.png";
 
 const Header = () => {
     const history = useHistory();
+
     return (
         <div className="header__container">
             <header className="wrapper header">
@@ -12,7 +13,7 @@ const Header = () => {
                         <img
                             src={logo}
                             alt="logo"
-                            onClick={() => history.push('/')}
+                            onClick={() => history.push("/")}
                         />
                     </div>
                     <div className="header__top__group">
@@ -27,11 +28,17 @@ const Header = () => {
                     </div>
                     <div className="header__top__acc">
                         <i className="far fa-user"></i>
-                        <span>Đăng nhập</span>
+                        <span onClick={() => history.push("/login")}>
+                            Đăng nhập
+                        </span>
                     </div>
-                    <div className="header__top__cart">
+                    <div
+                        className="header__top__cart"
+                        onClick={() => history.push("/cart")}
+                    >
                         <i className="fas fa-shopping-cart"></i>
                         <span>Giỏ hàng</span>
+                        <span className="header__top__cart__count">0</span>
                     </div>
                 </div>
                 <div className="header__bottom">

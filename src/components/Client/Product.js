@@ -1,15 +1,19 @@
-import { withRouter, useHistory } from 'react-router-dom';
+import { withRouter, useHistory } from "react-router-dom";
 
 const Product = ({ link, ...props }) => {
     const history = useHistory();
     const handleRedirect = () => {
         console.log(history);
-        history.push('/detail-product');
+        history.push("/detail-product");
     };
     return (
         <div className="product">
             <div className="product__img">
-                <img src={link.link} alt="iphone" />
+                <img
+                    src={link.link}
+                    alt="iphone"
+                    onClick={() => handleRedirect()}
+                />
             </div>
             <div className="product__name">
                 <span>IPhone 12 128GB</span>
