@@ -19,6 +19,7 @@ const PromotionPhone = () => {
             link: 'https://images.fpt.shop/unsafe/fit-in/214x214/filters:quality(90):fill(white)/fptshop.com.vn/Uploads/Originals/2022/2/28/637816731075634766_xiaomi-redmi-note-11s-xam-dd-2.jpg',
         },
     ];
+
     return (
         <div className="pp">
             <div className="wrapper" style={{ backgroundColor: '#fff' }}>

@@ -1,6 +1,7 @@
-import Header from "../../components/Client/Header";
-import Footer from "../../components/Client/Footer";
-import Guides from "../../components/Client/Guides";
+import Header from '../../components/Client/Header';
+import Footer from '../../components/Client/Footer';
+import Guides from '../../components/Client/Guides';
+import Specifications from '../../components/Client/Specifications';
 
 const DetailProduct = () => {
     return (
@@ -8,18 +9,14 @@ const DetailProduct = () => {
             <Header />
             <main
                 className="dp__content"
-                style={{ backgroundColor: "#f8f9fa" }}
+                style={{ backgroundColor: '#f8f9fa' }}
             >
                 <div className="wrapper">
-                    <div className="dp__content__header">
-                        <div className="dp__content__header__top">
-                            <span>OPPO Reno6 Z 5G</span>
+                    <div className="dp__body">
+                        <div className="dp__body__row"></div>
+                        <div className="dp__body__main">
+                            <Specifications />
                         </div>
-                        <div className="dp__content__header__main">
-                            <div className="dp__content__header__main__left"></div>
-                        </div>
-                    </div>
-                    <div className="dp__content__body">
                         <Guides />
                     </div>
                 </div>

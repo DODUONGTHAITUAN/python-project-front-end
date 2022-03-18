@@ -1,8 +1,8 @@
-import { useState } from "react";
+import { useState } from 'react';
 
 const Guides = () => {
     const [listClicked, setListClicked] = useState([]);
-    console.log(listClicked);
+
     const handeClicked = (index) => {
         const start = listClicked.indexOf(index);
         if (start !== -1) {
@@ -12,6 +12,7 @@ const Guides = () => {
             setListClicked([...listClicked, index]);
         }
     };
+
     return (
         <div className="guides">
             <div className="guides__content wrapper">
@@ -22,7 +23,7 @@ const Guides = () => {
                     {[1, 2, 3, 4, 5].map((item, index) => (
                         <div
                             className={`guides__content__ques__item ${
-                                listClicked.includes(index) ? "active" : ""
+                                listClicked.includes(index) ? 'active' : ''
                             }`}
                             key={index}
                         >
@@ -41,8 +42,8 @@ const Guides = () => {
                                     <i
                                         className={`fas fa-chevron-${
                                             listClicked.includes(index)
-                                                ? "up"
-                                                : "down"
+                                                ? 'up'
+                                                : 'down'
                                         }`}
                                     ></i>
                                 </div>

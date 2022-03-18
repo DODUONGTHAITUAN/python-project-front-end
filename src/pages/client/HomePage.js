@@ -10,6 +10,7 @@ import AllProduct from '../../components/Client/AllProduct';
 const HomePage = (props) => {
     const { isLoggedIn } = props;
     //    const linkToRedirect = isLoggedIn ? '/' : '/login';
+
     return (
         <div className="home">
             <Header />

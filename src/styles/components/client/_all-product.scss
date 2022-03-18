@@ -8,9 +8,7 @@
         border: 1px solid #ddd;
         border-radius: 4px;
         &__top {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
+            @include flex(center, space-between);
             &__left {
                 display: flex;
                 align-items: center;
@@ -28,9 +26,12 @@
                         border: 1px solid #ddd;
                         transition: all linear 0.1s;
                         &.active {
-                            color: #fff;
-                            background-color: #cb1c22;
-                            border: 1px solid #cb1c22;
+                            &,
+                            &:hover {
+                                color: #fff;
+                                background-color: #cb1c22;
+                                border: 1px solid #cb1c22;
+                            }
                         }
                         &:hover {
                             color: #fff;
@@ -56,17 +57,13 @@
             }
         }
         &__bottom {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
+            @include flex(center, space-between);
             flex-wrap: wrap;
         }
         &__btn {
             margin: 50px 0 20px 0;
-            display: flex;
-            align-items: center;
+            @include flex(center, center);
             flex-direction: column;
-            justify-content: center;
             span {
                 color: rgba(0, 0, 0, 0.5);
                 cursor: pointer;

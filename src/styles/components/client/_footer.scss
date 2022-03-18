@@ -2,12 +2,10 @@
     padding-top: 20px;
     border-top: 1px solid #ddd;
     .footer__top {
-        display: flex;
-        align-items: flex-start;
+        @include flex(flex-start);
         &__menu {
             width: 80%;
-            display: flex;
-            align-items: flex-start;
+            @include flex(flex-start);
             gap: 30px;
             margin-right: auto;
             &__item {
@@ -31,8 +29,7 @@
                 font-weight: 600;
             }
             &__icons {
-                display: flex;
-                align-items: center;
+                @include flex(center);
                 gap: 20px;
                 i {
                     font-size: 25px;
@@ -62,8 +59,7 @@
             }
             &__icons {
                 flex-wrap: wrap;
-                display: flex;
-                align-items: center;
+                @include flex(center);
                 gap: 10px;
                 font-size: 25px;
             }

@@ -5,7 +5,6 @@
     border-radius: 4px;
     transition: all linear 0.1s;
     box-sizing: border-box;
-
     border: 1px solid #fff;
     &:hover {
         border: 1px solid #ddd;
@@ -23,69 +22,104 @@
             }
         }
     }
-    &__name {
-        font-size: 16px;
-        font-weight: 700;
-        color: rgba(0, 0, 0, 0.8);
-        display: inline-block;
-        margin: 10px 0 0 0;
-    }
-    &__prices {
-        span {
-            display: inline-block;
-            margin: 5px 0 0 0;
-            color: #cb1c22;
-            font-size: 18px;
-            font-weight: 600;
-        }
-    }
-    &__info {
-        margin: 5px 0;
-        background-color: #eee;
-        border-radius: 4px;
-        padding: 5px;
+    &__main {
         &__top {
-            display: flex;
+            &__name {
+                font-weight: 600;
+                font-size: 17px;
+            }
+            &__price {
+                color: #d2393e;
+                font-size: 18px;
+                font-weight: 600;
+            }
+        }
+        &__mid {
+            margin: 10px 0;
+            padding: 5px;
+            @include flex(center);
             flex-wrap: wrap;
-            gap: 15px;
-            color: rgba(0, 0, 0, 0.6);
+            border-radius: 3px;
+            background-color: #eee;
+            color: rgba(0, 0, 0, 0.5);
             font-weight: 500;
+            gap: 15px;
             &__item {
-                display: flex;
-                align-items: center;
-                i {
-                    margin-right: 4px;
+                @include flex(center);
+                gap: 5px;
+            }
+        }
+        &__actions {
+            @include flex(center, space-between);
+            button {
+                font-weight: 500;
+                color: #fff;
+                font-size: 16px;
+                outline: none;
+                border-radius: 4px;
+                transition: all linear 0.1s;
+            }
+            &__btn-pay {
+                background-color: #cb1c22;
+                border: #cb1c22;
+                padding: 5px 25px;
+                &:hover {
+                    background-color: #ae1427;
+                }
+            }
+            &__btn-compare {
+                margin-top: auto;
+                padding: 5px 20px;
+                background-color: #99a2aa;
+                border: #99a2aa;
+                &:hover {
+                    background-color: #6c757d;
                 }
             }
         }
     }
-    &__btns {
-        margin: 15px 0 0 0;
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        button {
-            border: none;
-            outline: none;
-            border-radius: 4px;
-            color: #fff;
-            font-size: 16px;
-            cursor: pointer;
-            transition: all linear 0.1s;
-        }
-        &__pay-now {
-            padding: 5px 30px;
-            background-color: #cb1c22;
-            &:hover {
-                background-color: #ae1427;
-            }
-        }
+}
 
-        &__compare {
-            padding: 5px 20px;
-            background-color: #99a2aa;
-            &:hover {
-                background-color: #6c757d;
+.product.list-layout {
+    width: 100%;
+    @include flex(flex-start);
+    .product__img,
+    .product__main,
+    product__sale {
+        width: 30%;
+    }
+    .product__main,
+    .product__sale {
+        margin-top: 10px;
+    }
+    .product__sale {
+        border-radius: 4px;
+        padding: 10px;
+        margin-left: 30px;
+        border: 1px solid #f8f9fa;
+        background-color: #f8f9fa;
+        color: rgba(0, 0, 0, 0.6);
+        &__title {
+            font-size: 14px;
+            font-weight: 600;
+            display: inline-block;
+            margin-bottom: 10px;
+        }
+        &__list {
+            &__item {
+                &:not(:last-child) {
+                    margin-bottom: 20px;
+                }
+                @include flex(center);
+                font-size: 12px;
+                img {
+                    margin-right: 5px;
+                    border-radius: 100%;
+                    border: 1px solid #fff;
+                    &:hover {
+                        border: 1px solid #ddd;
+                    }
+                }
             }
         }
     }
