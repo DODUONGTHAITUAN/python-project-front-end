@@ -2,6 +2,7 @@ import Header from '../../components/Client/Header';
 import Footer from '../../components/Client/Footer';
 import Guides from '../../components/Client/Guides';
 import Specifications from '../../components/Client/Specifications';
+import ProductView from '../../components/Client/ProductView';
 
 const DetailProduct = () => {
     return (
@@ -13,7 +14,9 @@ const DetailProduct = () => {
             >
                 <div className="wrapper">
                     <div className="dp__body">
-                        <div className="dp__body__row"></div>
+                        <div className="dp__body__row">
+                            <ProductView />
+                        </div>
                         <div className="dp__body__main">
                             <Specifications />
                         </div>

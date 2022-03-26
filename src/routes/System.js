@@ -1,18 +1,17 @@
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import { Redirect, Route, Switch } from 'react-router-dom';
+import React, { Component } from "react";
+import { connect } from "react-redux";
+import { Redirect, Route, Switch } from "react-router-dom";
 
-import Header from '../components/System/Header/Header';
-import UserManage from '../components/System/UserManage';
-import ProductManage from '../components/System/ProductManage';
-import RegisterPackageGroupOrAcc from '../components/System/RegisterPackageGroupOrAcc';
+import Header from "../components/System/Header/Header";
+import UserManage from "../pages/system/UserManage";
+import ProductManage from "../components/System/ProductManage";
+import RegisterPackageGroupOrAcc from "../components/System/RegisterPackageGroupOrAcc";
+import DetailUser from "../pages/system/DetailUser";
 
 class System extends Component {
     render() {
-        console.log('Herer');
         const { systemMenuPath, isLoggedIn } = this.props;
-        console.log(systemMenuPath);
-        let linkToRedirect = isLoggedIn ? '/system/user-manage' : '/login';
+        let linkToRedirect = isLoggedIn ? "/system/user-manage" : "/login";
 
         //return <Redirect to={linkToRedirect} />;
         return (
@@ -24,6 +23,11 @@ class System extends Component {
                             <Route
                                 path="/system/user-manage"
                                 component={UserManage}
+                                exact
+                            />
+                            <Route
+                                path={"/system/user-manage/profile/:type/:id"}
+                                component={DetailUser}
                             />
                             <Route
                                 path="/system/product-manage"

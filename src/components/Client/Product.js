@@ -1,15 +1,13 @@
-import { withRouter, useHistory } from 'react-router-dom';
+import { withRouter, useHistory } from "react-router-dom";
 
 const Product = ({ link, listLayout }) => {
     const history = useHistory();
     const handleRedirect = () => {
-        history.push('/detail-product');
+        history.push("/detail-product");
     };
 
-    console.log(listLayout);
-
     return (
-        <div className={`product ${listLayout === 2 ? 'list-layout' : ''}`}>
+        <div className={`product ${listLayout === 2 ? "list-layout" : ""}`}>
             <div className="product__img">
                 <img
                     src={link.link}
@@ -60,7 +58,7 @@ const Product = ({ link, listLayout }) => {
             </div>
             <div
                 className="product__sale"
-                style={{ display: `${listLayout === 2 ? 'block' : 'none'}` }}
+                style={{ display: `${listLayout === 2 ? "block" : "none"}` }}
             >
                 <span className="product__sale__title">Khuyến mãi</span>
                 <div className="product__sale__list">
