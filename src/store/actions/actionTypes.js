@@ -10,6 +10,12 @@ const actionTypes = Object.freeze({
 
     //user
     ADD_USER_SUCCESS: 'ADD_USER_SUCCESS',
-})
+
+    // Cart
+    ADD_TO_CART: 'ADD_TO_CART',
+    REMOVE_FROM_CART: 'REMOVE_FROM_CART',
+    ADJUST_QTY: 'ADJUST_QTY',
+    LOAD_CURRENT_ITEM: 'LOAD_CURRENT_ITEM',
+});
 
 export default actionTypes;

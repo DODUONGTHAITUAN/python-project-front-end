@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Select from "react-select";
 
 import { types } from "../../utils/constant";
@@ -17,10 +17,6 @@ const roles = [
     { value: "RO2", label: "Customer" },
 ];
 
-const getRandomArbitrary = (min, max) => {
-    return Math.random() * (max - min) + min;
-};
-
 const ProfileUser = (props) => {
     const { type, id } = props;
 
@@ -35,6 +31,29 @@ const ProfileUser = (props) => {
     // Control overlay
     const [isOpenModal, setOpenModal] = useState(false);
 
+    const handleGetInfoUser = async (id) => {
+        const response = await userService.getUserByID(id);
+        if (response.data?.code === 0) {
+            const { user } = response.data;
+            setFullName(user.fullName);
+            setAddress(user.address);
+            setEmail(user.email);
+            setPhonenumber(user.phonenumber);
+            const gender = genders.find((item) => item.value === user.genderID);
+            const role = roles.find((item) => item.value === user.roleID);
+            setSelectedGengerID(gender);
+            setSelectedRoleID(role);
+        }
+    };
+
+    // useEffect with empty array === componentDidMount
+    useEffect(() => {
+        if (id >= 0) {
+            handleGetInfoUser(id);
+        }
+    }, []);
+
+    // Toggle overlay Loading
     const handleToggleModal = () => {
         setOpenModal(!isOpenModal);
     };
@@ -42,13 +61,18 @@ const ProfileUser = (props) => {
     // Handle save changes profile
     const handleSaveChangesProfile = async () => {
         // Verify data
-        if (!fullName || !address || !email || !phonenumber || !password) {
+        if (type === types.NEW) {
+            if (!password) {
+                return;
+            }
+        }
+        if (!fullName || !address || !email || !phonenumber) {
             return;
         }
 
         // Waiting save data to database
         // Make data
-        const data = {
+        let data = {
             fullName,
             address,
             email,
@@ -60,10 +84,17 @@ const ProfileUser = (props) => {
 
         // Open loading ....
         setOpenModal(true);
-        // Call API
-        const res = await userService.createNewUser(data);
 
-        // Check success close loading
+        let res = {};
+        if (type === types.NEW) {
+            // Call API
+            res = await userService.createNewUser(data);
+
+            // Check success close loading
+        } else {
+            data = { ...data, id };
+            res = await userService.updateUserById(data);
+        }
         if (res.data?.code === 0) {
             setTimeout(() => {
                 setOpenModal(false);
@@ -122,7 +153,7 @@ const ProfileUser = (props) => {
                                     id="fullName"
                                     type="text"
                                     placeholder="Enter your full name..."
-                                    name={fullName}
+                                    value={fullName}
                                     onChange={(e) =>
                                         setFullName(e.target.value)
                                     }
@@ -141,6 +172,7 @@ const ProfileUser = (props) => {
                                     </label>
                                     <Select
                                         options={genders}
+                                        value={selectedGenderID}
                                         defaultValue={selectedGenderID}
                                         onChange={setSelectedGengerID}
                                         isDisabled={type === types.VIEW}
@@ -157,6 +189,7 @@ const ProfileUser = (props) => {
                                         type="text"
                                         placeholder="Enter your bio..."
                                         disabled={type === types.VIEW}
+                                        defaultValue="Love pink color"
                                     />
                                 </div>
                             </div>
@@ -171,6 +204,7 @@ const ProfileUser = (props) => {
                                         Organization name
                                     </label>
                                     <input
+                                        defaultValue="Fpt Software"
                                         className="form-control"
                                         id="inputOrgName"
                                         type="text"
@@ -192,7 +226,7 @@ const ProfileUser = (props) => {
                                         type="text"
                                         placeholder="Enter your location..."
                                         disabled={type === types.VIEW}
-                                        name={address}
+                                        value={address}
                                         onChange={(e) =>
                                             setAddress(e.target.value)
                                         }
@@ -210,7 +244,7 @@ const ProfileUser = (props) => {
                                     type="email"
                                     placeholder="Enter your email address"
                                     disabled={type === types.VIEW}
-                                    name={email}
+                                    value={email}
                                     onChange={(e) => setEmail(e.target.value)}
                                 />
                             </div>
@@ -246,7 +280,7 @@ const ProfileUser = (props) => {
                                         Phone number
                                     </label>
                                     <input
-                                        name={phonenumber}
+                                        value={phonenumber}
                                         onChange={(e) =>
                                             setPhonenumber(e.target.value)
                                         }
@@ -266,6 +300,7 @@ const ProfileUser = (props) => {
                                         Role
                                     </label>
                                     <Select
+                                        value={selectedRoleID}
                                         options={roles}
                                         onChange={setSelectedRoleID}
                                         defaultValue={selectedRoleID}
