@@ -5,7 +5,6 @@ import { Redirect, Route, Switch } from 'react-router-dom';
 import Header from '../components/System/Header/Header';
 import UserManage from '../pages/system/UserManage';
 import ProductManage from '../pages/system/ProductManage';
-import RegisterPackageGroupOrAcc from '../components/System/RegisterPackageGroupOrAcc';
 import DetailUser from '../pages/system/DetailUser';
 import DetailProduct from '../pages/system/DetailProduct';
 import OptionsProduct from '../pages/system/OptionsProduct';
@@ -43,10 +42,6 @@ class System extends Component {
                             <Route
                                 path='/system/product-manage/update-options/:id'
                                 component={OptionsProduct}
-                            />
-                            <Route
-                                path='/system/register-package-group-or-account'
-                                component={RegisterPackageGroupOrAcc}
                             />
                             <Route
                                 component={() => {

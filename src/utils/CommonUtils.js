@@ -10,6 +10,20 @@ class CommonUtils {
         }));
         return options;
     }
+
+    static validateOption(option) {
+        if (
+            !option.productID ||
+            !option.ram ||
+            !option.rom ||
+            !option.price ||
+            !option.image ||
+            !option.colorID
+        ) {
+            return false;
+        }
+        return true;
+    }
 }
 
 export default CommonUtils;

@@ -1,75 +1,14 @@
 import { useEffect, useState } from 'react';
 import Select from 'react-select';
+import { Row } from 'reactstrap';
 
-import Pagination from '../../components/Customs/Pagination';
-import DropdownOption from '../../components/System/DropdownOption';
-import ProductModal from '../../components/System/ProductModal';
+//import Pagination from '../../components/Customs/Pagination';
+import ProductList from '../../components/System/Product/ProductList';
+import ProductModal from '../../components/System/Product/ProductModal';
 import allcodeService from '../../services/allcodesService';
 import productService from '../../services/productService';
 import CommonUtils from '../../utils/CommonUtils';
 import { types, keyMaps } from '../../utils/constant';
-
-const ths = [
-    {
-        id: 1,
-        title: 'Date',
-        className: 'col col-1',
-    },
-    {
-        id: 2,
-        title: 'Product ID',
-        className: 'col col-2',
-    },
-    {
-        id: 3,
-        title: 'Name',
-        className: 'col col-3',
-    },
-    {
-        id: 4,
-        title: 'Price',
-        className: 'col col-4',
-    },
-    {
-        id: 5,
-        title: 'Brand',
-        className: 'col col-5',
-    },
-    {
-        id: 6,
-        title: 'Actions',
-        className: 'col col-6',
-    },
-];
-
-const tds = [
-    {
-        id: 1,
-        prop: 'product_date',
-        className: 'col col-1',
-    },
-    {
-        id: 2,
-        prop: 'id',
-        className: 'col col-2',
-    },
-    {
-        id: 3,
-        title: 'Name',
-        prop: 'product_name',
-        className: 'col col-3',
-    },
-    {
-        id: 4,
-        prop: 'price',
-        className: 'col col-4',
-    },
-    {
-        id: 5,
-        prop: 'brand_value',
-        className: 'col col-5',
-    },
-];
 
 const ProductManage = () => {
     // Define state
@@ -118,6 +57,11 @@ const ProductManage = () => {
     return (
         <div className='pm mt-4 mb-4'>
             <div className='pm-container container'>
+                <Row>
+                    <h2 className='text-center fw-bold text-uppercase'>
+                        Product Manage
+                    </h2>
+                </Row>
                 <div className='row gx-3 mb-3'>
                     <div className='col-md-6'>
                         <label className=' mb-1' htmlFor='roleID'>
@@ -142,44 +86,10 @@ const ProductManage = () => {
                     </div>
                 </div>
                 <div className='row gx-3 mb3'>
-                    <div className='container'>
-                        <ul className='responsive-table'>
-                            <li className='table-header'>
-                                {ths.map((item) => (
-                                    <div
-                                        className={item.className}
-                                        key={item.id}
-                                    >
-                                        {item.title}
-                                    </div>
-                                ))}
-                            </li>
-                            {filterProducts?.length !== 0 &&
-                                filterProducts.map((item) => {
-                                    return (
-                                        <li key={item.id} className='table-row'>
-                                            {tds.map((item_td) => (
-                                                <div
-                                                    key={item_td.id}
-                                                    className={
-                                                        item_td.className
-                                                    }
-                                                >
-                                                    {item[item_td.prop] ||
-                                                        '$999'}
-                                                </div>
-                                            ))}
-                                            <div className='col col-6 options'>
-                                                <DropdownOption id={item.id} />
-                                            </div>
-                                        </li>
-                                    );
-                                })}
-                        </ul>
-                    </div>
+                    <ProductList filterProducts={filterProducts} />
                 </div>
             </div>
-            <Pagination />
+            {/* <Pagination /> */}
             <ProductModal
                 brands={brands}
                 toggleProductModal={toggleProductModal}

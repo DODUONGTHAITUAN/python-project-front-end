@@ -1,17 +1,17 @@
-import { useState } from "react";
-import { withRouter } from "react-router";
-import ProfileUser from "../../components/System/ProfileUser";
-import SecurityAccount from "../../components/System/SecurityAccount";
-import { types } from "../../utils/constant";
+import { useState } from 'react';
+import { withRouter } from 'react-router';
+import ProfileUser from '../../components/System/User/ProfileUser';
+import SecurityAccount from '../../components/System/User/SecurityAccount';
+import { types } from '../../utils/constant';
 
 const tabs = [
     {
         id: 1,
-        title: "Profile",
+        title: 'Profile',
     },
     {
         id: 2,
-        title: "Security",
+        title: 'Security',
     },
 ];
 
@@ -24,20 +24,20 @@ const DetailUser = (props) => {
 
     // Handle return UserManage page
     const handleRedirectUserManage = () => {
-        history?.push && history.push("/system/user-manage");
+        history?.push && history.push('/system/user-manage');
     };
     return (
-        <div className="du">
-            <div className="du__container container">
-                <div className="container-xl px-4 mt-4">
+        <div className='du'>
+            <div className='du__container container'>
+                <div className='container-xl px-4 mt-4'>
                     {/* Account page navigation*/}
                     <nav>
-                        <ul className="Tabs">
+                        <ul className='Tabs'>
                             {tabs.map((item) => {
                                 return (
                                     <li
                                         className={`Tabs__tab  Tab ${
-                                            tab === item.id ? "active" : ""
+                                            tab === item.id ? 'active' : ''
                                         }`}
                                         hidden={
                                             type === types.NEW && item.id === 2
@@ -50,23 +50,23 @@ const DetailUser = (props) => {
                                 );
                             })}
                             <li
-                                className="Tabs__presentation-slider"
-                                role="presentation"
+                                className='Tabs__presentation-slider'
+                                role='presentation'
                             />
                         </ul>
                     </nav>
-                    <hr className="mt-0 mb-4" />
+                    <hr className='mt-0 mb-4' />
                     {tab === detailUserComponent ? (
                         <ProfileUser type={type} id={id} />
                     ) : (
                         <SecurityAccount />
                     )}
-                    <div className="du__return">
+                    <div className='du__return'>
                         <button
-                            className="btn btn-primary"
+                            className='btn btn-primary'
                             onClick={() => handleRedirectUserManage()}
                         >
-                            <i className="far fa-arrow-alt-circle-left"></i>
+                            <i className='far fa-arrow-alt-circle-left'></i>
                             <span>Back</span>
                         </button>
                     </div>

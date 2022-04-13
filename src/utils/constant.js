@@ -7,6 +7,11 @@ export const path = {
 
 export const keyMaps = {
     BRAND: 'BRAND',
+    BATTERY: 'BATTERY',
+    OS: 'OS',
+    COLOR: 'COLOR',
+    FEATURE: 'FEATURE',
+    SCREEN: 'SCREEN',
 };
 
 export const types = {

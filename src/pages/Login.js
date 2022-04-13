@@ -1,13 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { push } from 'connected-react-router';
-import {
-    MDBTabs,
-    MDBTabsItem,
-    MDBTabsLink,
-    MDBTabsContent,
-    MDBTabsPane,
-} from 'mdb-react-ui-kit';
 
 import * as actions from '../store/actions';
 import { KeyCodeUtils, LanguageUtils } from '../utils';

@@ -1,6 +1,9 @@
 @import 'variables';
 @import '../../node_modules/bootstrap/scss/bootstrap';
+// mdb-react-ui-kit v5
 @import '../../node_modules/mdb-react-ui-kit/dist/css/mdb.min.css';
+// React markdow
+@import '../../node_modules/react-markdown-editor-lite/lib/index.css';
 
 $fa-font-path: '~@fortawesome/fontawesome-free-webfonts/webfonts';
 @import '~@fortawesome/fontawesome-free-webfonts/scss/fontawesome.scss';
@@ -30,6 +33,7 @@ $fa-font-path: '~@fortawesome/fontawesome-free-webfonts/webfonts';
 @import './components/client/empty-cart';
 @import './components/client/specifications';
 @import './components/client/product-view';
+@import './components/client/slider/slider';
 @import './components/customs/overlay';
 @import './components/customs/pagination';
 

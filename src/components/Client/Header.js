@@ -1,3 +1,4 @@
+import { memo } from 'react';
 import { useHistory } from 'react-router';
 
 import logo from '../../assets/images/logo.png';
@@ -43,47 +44,47 @@ const nav = [
 const Header = () => {
     const history = useHistory();
     return (
-        <div className="header__container">
-            <header className="wrapper header">
-                <div className="header__top">
-                    <div className="header__top__logo">
+        <div className='header__container'>
+            <header className='wrapper header'>
+                <div className='header__top'>
+                    <div className='header__top__logo'>
                         <img
                             src={logo}
-                            alt="logo"
+                            alt='logo'
                             onClick={() => history.push('/')}
                         />
                     </div>
-                    <div className="header__top__group">
+                    <div className='header__top__group'>
                         <input
-                            className="header__top__group__search"
-                            placeholder="Tìm điện thoại..."
+                            className='header__top__group__search'
+                            placeholder='Tìm điện thoại...'
                         />
-                        <button className="header__top__group__btn">
-                            <i className="fas fa-search"></i>
+                        <button className='header__top__group__btn'>
+                            <i className='fas fa-search'></i>
                             <span>Tìm kiếm</span>
                         </button>
                     </div>
-                    <div className="header__top__acc">
-                        <i className="far fa-user"></i>
+                    <div className='header__top__acc'>
+                        <i className='far fa-user'></i>
                         <span onClick={() => history.push('/login')}>
                             Đăng nhập
                         </span>
                     </div>
                     <div
-                        className="header__top__cart"
+                        className='header__top__cart'
                         onClick={() => history.push('/cart')}
                     >
-                        <i className="fas fa-shopping-cart"></i>
+                        <i className='fas fa-shopping-cart'></i>
                         <span>Giỏ hàng</span>
-                        <span className="header__top__cart__count">0</span>
+                        <span className='header__top__cart__count'>0</span>
                     </div>
                 </div>
-                <div className="header__bottom">
-                    <div className="header__bottom__menu">
+                <div className='header__bottom'>
+                    <div className='header__bottom__menu'>
                         {nav.map((item) => {
                             return (
                                 <div
-                                    className="header__bottom__menu__item"
+                                    className='header__bottom__menu__item'
                                     key={item.id}
                                 >
                                     <i className={item.icon}></i>
@@ -91,8 +92,8 @@ const Header = () => {
                                 </div>
                             );
                         })}
-                        <div className="header__bottom__menu__item">
-                            <i className="fab fa-accusoft"></i>
+                        <div className='header__bottom__menu__item'>
+                            <i className='fab fa-accusoft'></i>
                             <span>vsmart</span>
                         </div>
                     </div>
@@ -102,4 +103,4 @@ const Header = () => {
     );
 };
 
-export default Header;
+export default memo(Header);

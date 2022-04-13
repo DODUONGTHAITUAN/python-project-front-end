@@ -1,31 +1,31 @@
-import { useEffect, useState } from "react";
-import Select from "react-select";
+import { useEffect, useState } from 'react';
+import Select from 'react-select';
 
-import { types } from "../../utils/constant";
-import userService from "../../services/userService";
-import Overlay from "../Customs/Overlay";
-import { withRouter } from "react-router";
+import { types } from '../../../utils/constant';
+import userService from '../../../services/userService';
+import Overlay from '../../Customs/Overlay';
+import { withRouter } from 'react-router';
 
 const genders = [
-    { value: "GEN1", label: "Male" },
-    { value: "GEN2", label: "Female" },
-    { value: "GEN3", label: "Other" },
+    { value: 'GEN1', label: 'Male' },
+    { value: 'GEN2', label: 'Female' },
+    { value: 'GEN3', label: 'Other' },
 ];
 
 const roles = [
-    { value: "RO1", label: "Admin" },
-    { value: "RO2", label: "Customer" },
+    { value: 'RO1', label: 'Admin' },
+    { value: 'RO2', label: 'Customer' },
 ];
 
 const ProfileUser = (props) => {
     const { type, id } = props;
 
     //  Define state
-    const [fullName, setFullName] = useState("");
-    const [address, setAddress] = useState("");
-    const [email, setEmail] = useState("");
-    const [phonenumber, setPhonenumber] = useState("");
-    const [password, setPassword] = useState("");
+    const [fullName, setFullName] = useState('');
+    const [address, setAddress] = useState('');
+    const [email, setEmail] = useState('');
+    const [phonenumber, setPhonenumber] = useState('');
+    const [password, setPassword] = useState('');
     const [selectedGenderID, setSelectedGengerID] = useState(genders[0]);
     const [selectedRoleID, setSelectedRoleID] = useState(roles[0]);
     // Control overlay
@@ -99,60 +99,60 @@ const ProfileUser = (props) => {
             setTimeout(() => {
                 setOpenModal(false);
                 const { history } = props;
-                history?.push && history.push("/system/user-manage");
+                history?.push && history.push('/system/user-manage');
             }, 1000);
         }
     };
 
     return (
-        <div className="row pu align-items-stretch">
-            <div className="col-xl-4">
+        <div className='row pu align-items-stretch'>
+            <div className='col-xl-4'>
                 {/* Profile picture card*/}
-                <div className="card mb-4 mb-xl-0">
-                    <div className="card-header">Profile Picture</div>
-                    <div className="card-body text-center">
+                <div className='card mb-4 mb-xl-0'>
+                    <div className='card-header'>Profile Picture</div>
+                    <div className='card-body text-center'>
                         {/* Profile picture image*/}
                         <img
-                            className="img-account-profile rounded-circle mb-2"
-                            src="http://bootdey.com/img/Content/avatar/avatar1.png"
-                            alt="avt"
+                            className='img-account-profile rounded-circle mb-2'
+                            src='http://bootdey.com/img/Content/avatar/avatar1.png'
+                            alt='avt'
                         />
                         {/* Profile picture help block*/}
-                        <div className="small font-italic text-muted mb-4">
+                        <div className='small font-italic text-muted mb-4'>
                             JPG or PNG no larger than 5 MB
                         </div>
                         {/* Profile picture upload button*/}
                         <button
                             disabled={type === types.VIEW}
-                            className="btn btn-primary"
-                            style={{ padding: "0 10px" }}
-                            type="button"
+                            className='btn btn-primary'
+                            style={{ padding: '0 10px' }}
+                            type='button'
                         >
                             Upload new image
                         </button>
                     </div>
                 </div>
             </div>
-            <div className="col-xl-8">
+            <div className='col-xl-8'>
                 {/* Account details card*/}
-                <div className="card mb-4">
-                    <div className="card-header">Account Details</div>
-                    <div className="card-body">
+                <div className='card mb-4'>
+                    <div className='card-header'>Account Details</div>
+                    <div className='card-body'>
                         <form>
                             {/* Form Group (username)*/}
-                            <div className="mb-3">
+                            <div className='mb-3'>
                                 <label
-                                    className="small mb-1"
-                                    htmlFor="fullName"
+                                    className='small mb-1'
+                                    htmlFor='fullName'
                                 >
                                     Username (how your name will appear to other
                                     users on the site)
                                 </label>
                                 <input
-                                    className="form-control"
-                                    id="fullName"
-                                    type="text"
-                                    placeholder="Enter your full name..."
+                                    className='form-control'
+                                    id='fullName'
+                                    type='text'
+                                    placeholder='Enter your full name...'
                                     value={fullName}
                                     onChange={(e) =>
                                         setFullName(e.target.value)
@@ -161,12 +161,12 @@ const ProfileUser = (props) => {
                                 />
                             </div>
                             {/* Form Row*/}
-                            <div className="row gx-3 mb-3">
+                            <div className='row gx-3 mb-3'>
                                 {/* Form Group (first name)*/}
-                                <div className="col-md-6">
+                                <div className='col-md-6'>
                                     <label
-                                        className="small mb-1"
-                                        htmlFor="inputFirstName"
+                                        className='small mb-1'
+                                        htmlFor='inputFirstName'
                                     >
                                         Gender
                                     </label>
@@ -179,52 +179,52 @@ const ProfileUser = (props) => {
                                     />
                                 </div>
                                 {/* Form Group (last name)*/}
-                                <div className="col-md-6">
-                                    <label className="small mb-1" htmlFor="bio">
+                                <div className='col-md-6'>
+                                    <label className='small mb-1' htmlFor='bio'>
                                         Bio
                                     </label>
                                     <input
-                                        className="form-control"
-                                        id="bio"
-                                        type="text"
-                                        placeholder="Enter your bio..."
+                                        className='form-control'
+                                        id='bio'
+                                        type='text'
+                                        placeholder='Enter your bio...'
                                         disabled={type === types.VIEW}
-                                        defaultValue="Love pink color"
+                                        defaultValue='Love pink color'
                                     />
                                 </div>
                             </div>
                             {/* Form Row        */}
-                            <div className="row gx-3 mb-3">
+                            <div className='row gx-3 mb-3'>
                                 {/* Form Group (organization name)*/}
-                                <div className="col-md-6">
+                                <div className='col-md-6'>
                                     <label
-                                        className="small mb-1"
-                                        htmlFor="inputOrgName"
+                                        className='small mb-1'
+                                        htmlFor='inputOrgName'
                                     >
                                         Organization name
                                     </label>
                                     <input
-                                        defaultValue="Fpt Software"
-                                        className="form-control"
-                                        id="inputOrgName"
-                                        type="text"
-                                        placeholder="Enter your organization name"
+                                        defaultValue='Fpt Software'
+                                        className='form-control'
+                                        id='inputOrgName'
+                                        type='text'
+                                        placeholder='Enter your organization name'
                                         disabled={type === types.VIEW}
                                     />
                                 </div>
                                 {/* Form Group (location)*/}
-                                <div className="col-md-6">
+                                <div className='col-md-6'>
                                     <label
-                                        className="small mb-1"
-                                        htmlFor="address"
+                                        className='small mb-1'
+                                        htmlFor='address'
                                     >
                                         Location
                                     </label>
                                     <input
-                                        className="form-control"
-                                        id="address"
-                                        type="text"
-                                        placeholder="Enter your location..."
+                                        className='form-control'
+                                        id='address'
+                                        type='text'
+                                        placeholder='Enter your location...'
                                         disabled={type === types.VIEW}
                                         value={address}
                                         onChange={(e) =>
@@ -234,25 +234,25 @@ const ProfileUser = (props) => {
                                 </div>
                             </div>
                             {/* Form Group (email address)*/}
-                            <div className="mb-3">
-                                <label className="small mb-1" htmlFor="email">
+                            <div className='mb-3'>
+                                <label className='small mb-1' htmlFor='email'>
                                     Email address
                                 </label>
                                 <input
-                                    className="form-control"
-                                    id="email"
-                                    type="email"
-                                    placeholder="Enter your email address"
+                                    className='form-control'
+                                    id='email'
+                                    type='email'
+                                    placeholder='Enter your email address'
                                     disabled={type === types.VIEW}
                                     value={email}
                                     onChange={(e) => setEmail(e.target.value)}
                                 />
                             </div>
                             {type === types.NEW && (
-                                <div className="mb-3">
+                                <div className='mb-3'>
                                     <label
-                                        className="small mb-1"
-                                        htmlFor="password"
+                                        className='small mb-1'
+                                        htmlFor='password'
                                     >
                                         Password
                                     </label>
@@ -261,21 +261,21 @@ const ProfileUser = (props) => {
                                         onChange={(e) =>
                                             setPassword(e.target.value)
                                         }
-                                        className="form-control"
-                                        id="password"
-                                        type="password"
-                                        placeholder="Enter your password..."
+                                        className='form-control'
+                                        id='password'
+                                        type='password'
+                                        placeholder='Enter your password...'
                                         disabled={type === types.VIEW}
                                     />
                                 </div>
                             )}
                             {/* Form Row*/}
-                            <div className="row gx-3 mb-3">
+                            <div className='row gx-3 mb-3'>
                                 {/* Form Group (phone number)*/}
-                                <div className="col-md-6">
+                                <div className='col-md-6'>
                                     <label
-                                        className="small mb-1"
-                                        htmlFor="phonenumber"
+                                        className='small mb-1'
+                                        htmlFor='phonenumber'
                                     >
                                         Phone number
                                     </label>
@@ -284,18 +284,18 @@ const ProfileUser = (props) => {
                                         onChange={(e) =>
                                             setPhonenumber(e.target.value)
                                         }
-                                        className="form-control"
-                                        id="phonenumber"
-                                        type="tel"
-                                        placeholder="Enter your phone number..."
+                                        className='form-control'
+                                        id='phonenumber'
+                                        type='tel'
+                                        placeholder='Enter your phone number...'
                                         disabled={type === types.VIEW}
                                     />
                                 </div>
                                 {/* Form Group (birthday)*/}
-                                <div className="col-md-6">
+                                <div className='col-md-6'>
                                     <label
-                                        className="small mb-1"
-                                        htmlFor="roleID"
+                                        className='small mb-1'
+                                        htmlFor='roleID'
                                     >
                                         Role
                                     </label>
@@ -310,8 +310,8 @@ const ProfileUser = (props) => {
                             </div>
                             {/* Save changes button*/}
                             <button
-                                className="btn btn-primary pu__btn"
-                                type="button"
+                                className='btn btn-primary pu__btn'
+                                type='button'
                                 disabled={type === types.VIEW}
                                 onClick={() => handleSaveChangesProfile()}
                             >
