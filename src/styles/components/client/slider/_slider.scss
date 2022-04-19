@@ -2,6 +2,10 @@
     &-inner {
         border-radius: 10px;
     }
+    &-control-prev,
+    &-control-next {
+        text-decoration: none;
+    }
     &-item {
         height: 300px;
     }

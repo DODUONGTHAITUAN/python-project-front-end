@@ -4,6 +4,7 @@ import { connectRouter } from 'connected-react-router';
 import appReducer from './appReducer';
 import adminReducer from './adminReducer';
 import userReducer from './userReducer';
+import shoppingReducer from './shoppingReducer';
 
 import autoMergeLevel2 from 'redux-persist/lib/stateReconciler/autoMergeLevel2';
 import storage from 'redux-persist/lib/storage';
@@ -23,12 +24,12 @@ const adminPersistConfig = {
 const shoppingPersistConfig = {
     ...persistCommonConfig,
     key: 'shopping',
-    whitelist: ['isLoggedIn', 'adminInfo'],
 };
 
 const createRootReducer = (history) =>
     combineReducers({
         router: connectRouter(history),
+        shopping: persistReducer(shoppingPersistConfig, shoppingReducer),
         admin: persistReducer(adminPersistConfig, adminReducer),
         user: userReducer,
         app: appReducer,

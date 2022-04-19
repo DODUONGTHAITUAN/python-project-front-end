@@ -3,14 +3,16 @@ import { Col, Row } from 'reactstrap';
 import Footer from '../../components/Client/Footer';
 import Header from '../../components/Client/Header';
 import CartList from '../../components/Client/Cart/CartList';
-import EmptyCart from '../../components/Client/EmptyCart';
+import EmptyCart from '../../components/Client/Cart/EmptyCart';
 import CartSummary from '../../components/Client/Cart/CartSummary';
 import CartProgess from '../../components/Client/Cart/CartProgess';
 import CartPay from '../../components/Client/Cart/CartPay';
+import { connect } from 'react-redux';
 
 const countItemInCart = 1;
 
-const Cart = () => {
+const Cart = (props) => {
+    console.log(props);
     return (
         <div className='cart'>
             <Header />
@@ -49,4 +51,8 @@ const Cart = () => {
     );
 };
 
-export default Cart;
+const mapStateToProps = (state) => ({
+    shopping: state.shopping,
+});
+
+export default connect(mapStateToProps, null)(Cart);

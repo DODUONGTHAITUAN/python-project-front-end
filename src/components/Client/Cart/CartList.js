@@ -1,3 +1,4 @@
+import { connect } from 'react-redux';
 import { Card, CardBody, CardHeader } from 'reactstrap';
 
 import CartItem from './CartItem';
@@ -17,4 +18,4 @@ const CartList = (props) => {
     );
 };
 
-export default CartList;
+export default connect(null, null)(CartList);

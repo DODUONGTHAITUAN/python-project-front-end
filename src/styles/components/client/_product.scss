@@ -83,10 +83,14 @@
 .product.list-layout {
     width: 100%;
     @include flex(flex-start);
-    .product__img,
-    .product__main,
-    product__sale {
+    .product__img {
         width: 30%;
+    }
+    .product__main {
+        width: 33%;
+    }
+    .product__sale {
+        width: calc(100% - 33% - 30%);
     }
     .product__main,
     .product__sale {
@@ -122,5 +126,15 @@
                 }
             }
         }
+    }
+}
+
+.lazy-image {
+    opacity: 0;
+    transition: opacity 0.2s ease-in-out;
+    -webkit-transition: opacity 0.1s ease-in-out;
+    -moz-transition: opacity 0.1s ease-in-out;
+    &.lazy-image.opacity {
+        opacity: 1;
     }
 }

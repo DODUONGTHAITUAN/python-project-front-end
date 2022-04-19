@@ -34,7 +34,7 @@ const ths = [
 ];
 
 const ProductList = (props) => {
-    const { filterProducts } = props;
+    const { products } = props;
     return (
         <div className='container'>
             <ul className='responsive-table'>
@@ -45,8 +45,8 @@ const ProductList = (props) => {
                         </div>
                     ))}
                 </li>
-                {filterProducts?.length !== 0 &&
-                    filterProducts.map((item) => {
+                {products?.length !== 0 &&
+                    products.map((item) => {
                         return <ProductItem item={item} key={item.id} />;
                     })}
             </ul>

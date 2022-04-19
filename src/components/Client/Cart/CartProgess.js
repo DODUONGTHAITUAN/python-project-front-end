@@ -23,7 +23,7 @@ const CartProgess = () => {
                 <MDBProgress>
                     <MDBProgressBar
                         striped
-                        bgColor='danger'
+                        bgColor='primary'
                         width={width.toString()}
                         valuemin={0}
                         valuemax={100}

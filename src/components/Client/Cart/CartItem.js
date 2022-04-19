@@ -1,6 +1,23 @@
+import { useState } from 'react';
+import { connect } from 'react-redux';
 import { Button, Col, Input, Row } from 'reactstrap';
 
-const CartItem = () => {
+import {
+    removeFromCart,
+    addToCart,
+    adjustQty,
+} from '../../../store/actions/shoppingActions';
+
+const CartItem = (props) => {
+    const [quantity, setQuantity] = useState(1);
+
+    const handleAdjustQty = (id, value) => {
+        if (value > 0) {
+            props.adjustQty(id, value);
+            setQuantity(value);
+        }
+    };
+
     return (
         <Row>
             <Col className='col-lg-1 col-md-12 mb-4 mb-lg-0 align-items-center d-flex'>
@@ -47,12 +64,18 @@ const CartItem = () => {
                     className='d-flex mb-4 gap-4 align-items-baseline'
                     style={{ maxWidth: '300px' }}
                 >
-                    <Button className='btn btn-primary px-3 me-2'>
+                    <Button
+                        className='btn btn-primary px-3 me-2'
+                        onClick={() => handleAdjustQty(1, quantity - 1)}
+                    >
                         <i className='fas fa-minus' />
                     </Button>
-                    <span className='form-outline'>1</span>
+                    <span className='form-outline'>{quantity}</span>
 
-                    <Button className='btn btn-primary px-3 ms-2'>
+                    <Button
+                        className='btn btn-primary px-3 ms-2'
+                        onClick={() => handleAdjustQty(1, quantity + 1)}
+                    >
                         <i className='fas fa-plus' />
                     </Button>
                 </div>
@@ -67,4 +90,11 @@ const CartItem = () => {
     );
 };
 
-export default CartItem;
+const mapStateToProps = (state) => ({});
+
+const mapDispatchToProps = (dispatch) => ({
+    removeFromCart: (id) => dispatch(removeFromCart(id)),
+    adjustQty: (id, quantity) => dispatch(adjustQty(id, quantity)),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(CartItem);

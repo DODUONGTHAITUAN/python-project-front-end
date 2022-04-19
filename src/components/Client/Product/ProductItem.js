@@ -1,24 +1,67 @@
+import { useEffect, useRef, useState } from 'react';
 import { withRouter, useHistory } from 'react-router-dom';
 
-const Product = ({ link, listLayout }) => {
+const plaholder = 'https://dummyimage.com/214x214/ffffff/ffffff.png';
+
+function elementInViewport(el) {
+    const rect = el.getBoundingClientRect();
+
+    return (
+        (rect.top >= 0 && rect.left >= 0) ||
+        rect.top >=
+            (window.innerHeight || document.documentElement.clientHeight)
+    );
+}
+
+const ProductItem = ({ item, listLayout }) => {
+    const [loaded, setLoaded] = useState(false);
+    const imgElm = useRef();
+
     const history = useHistory();
     const handleRedirect = () => {
         history.push('/detail-product');
     };
 
+    const handleGetImg = (value) => {
+        imgElm.current = value;
+    };
+
+    const handleScroll = () => {
+        //console.log(elementInViewport(imgElm.current), imgElm.current);
+        if (!loaded && elementInViewport(imgElm.current)) {
+            const imgLoader = new Image();
+            imgLoader.src = item?.image || plaholder;
+
+            imgLoader.onload = () => {
+                imgElm.current.setAttribute('src', `${item?.image || ''}`);
+                imgElm.current.classList.add('opacity');
+                setLoaded(true);
+            };
+        }
+    };
+
+    useEffect(() => {
+        handleScroll();
+        window.addEventListener('scroll', handleScroll);
+
+        return () => window.removeEventListener('scroll', handleScroll);
+    }, []);
+
     return (
         <div className={`product ${listLayout === 2 ? 'list-layout' : ''}`}>
             <div className='product__img'>
                 <img
-                    src={link.link}
-                    alt='iphone'
+                    className='lazy-image'
+                    ref={(value) => handleGetImg(value)}
+                    src={plaholder}
+                    alt={item?.product_name}
                     onClick={() => handleRedirect()}
                 />
             </div>
             <div className='product__main'>
                 <div className='product__main__top'>
                     <div className='product__main__top__name'>
-                        <span>IPhone 12 128GB</span>
+                        <span>{item?.product_name}</span>
                     </div>
                     <div className='product__main__top__price'>
                         <span>
@@ -29,7 +72,7 @@ const Product = ({ link, listLayout }) => {
                 <div className='product__main__mid'>
                     <div className='product__main__mid__item'>
                         <i className='fas fa-microchip'></i>
-                        <span>Apple A15 Bionic</span>
+                        <span>{item?.cpu}</span>
                     </div>
                     <div className='product__main__mid__item'>
                         <i className='fas fa-mobile-alt'></i>
@@ -52,7 +95,7 @@ const Product = ({ link, listLayout }) => {
                         Mua ngay
                     </button>
                     <button className='product__main__actions__btn-compare'>
-                        Thêm vào giỏ hàng
+                        Xem Chi Tiết
                     </button>
                 </div>
             </div>
@@ -88,4 +131,4 @@ const Product = ({ link, listLayout }) => {
     );
 };
 
-export default withRouter(Product);
+export default withRouter(ProductItem);

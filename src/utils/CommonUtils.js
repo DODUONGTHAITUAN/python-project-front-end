@@ -1,3 +1,5 @@
+import productService from '../services/productService';
+
 class CommonUtils {
     static isNumber1(number) {
         if (number === 1) return true;
@@ -23,6 +25,15 @@ class CommonUtils {
             return false;
         }
         return true;
+    }
+
+    static async handleGetProductsPagination(page, per_page) {
+        const data = { page, per_page };
+        const res = await productService.handleGetProductsPagination(data);
+        if (res.data?.code === 0) {
+            return res.data.data.products;
+        }
+        return [];
     }
 }
 

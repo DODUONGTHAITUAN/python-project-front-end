@@ -1,26 +1,26 @@
 import Header from '../../components/Client/Header';
 import Footer from '../../components/Client/Footer';
-import Guides from '../../components/Client/Guides';
-import Specifications from '../../components/Client/Specifications';
-import ProductView from '../../components/Client/ProductView';
+import GuideList from '../../components/Client/Guide/GuideList';
+import Specifications from '../../components/Client/Specifications/Specifications';
+import ProductView from '../../components/Client/Product/ProductView';
 
 const DetailProduct = () => {
     return (
-        <div className="dp">
+        <div className='dp'>
             <Header />
             <main
-                className="dp__content"
+                className='dp__content'
                 style={{ backgroundColor: '#f8f9fa' }}
             >
-                <div className="wrapper">
-                    <div className="dp__body">
-                        <div className="dp__body__row">
+                <div className='wrapper'>
+                    <div className='dp__body'>
+                        <div className='dp__body__row'>
                             <ProductView />
                         </div>
-                        <div className="dp__body__main">
+                        <div className='dp__body__main'>
                             <Specifications />
                         </div>
-                        <Guides />
+                        <GuideList />
                     </div>
                 </div>
             </main>

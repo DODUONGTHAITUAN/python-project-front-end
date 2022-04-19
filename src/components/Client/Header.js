@@ -1,4 +1,5 @@
 import { memo } from 'react';
+import { connect } from 'react-redux';
 import { useHistory } from 'react-router';
 
 import logo from '../../assets/images/logo.png';
@@ -103,4 +104,4 @@ const Header = () => {
     );
 };
 
-export default memo(Header);
+export default connect(null, null)(memo(Header));

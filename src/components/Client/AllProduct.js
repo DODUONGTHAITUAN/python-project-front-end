@@ -1,22 +1,8 @@
-import SideBar from './SideBar';
-import Product from './Product';
-import iphone from '../../assets/home/product/iphone.jpg';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
-const links = [
-    {
-        id: Math.random(),
-        link: 'https://images.fpt.shop/unsafe/fit-in/214x214/filters:quality(90):fill(white)/fptshop.com.vn/Uploads/Originals/2022/3/7/637822533541223450_oppo-reno7-z-dd-1.jpg',
-    },
-    {
-        id: Math.random(),
-        link: 'https://images.fpt.shop/unsafe/fit-in/214x214/filters:quality(90):fill(white)/fptshop.com.vn/Uploads/Originals/2021/8/11/637643170642413961_samsung-galaxy-z-fold3-xanh-dd.jpg',
-    },
-    {
-        id: Math.random(),
-        link: iphone,
-    },
-];
+import SideBar from './Sidebar/SideBar';
+import ProductList from './Product/ProductList';
+import CommonUtils from '../../utils/CommonUtils';
 
 const features = [
     {
@@ -44,24 +30,48 @@ const features = [
 const AllProduct = () => {
     const [isGridLayout, setGridlayout] = useState(1);
     const [feature, setFeature] = useState(features[0].id);
+    const [products, setProducts] = useState([]);
+    const [page, setPage] = useState(1);
+
+    const handleGetProducts = async (page, per_page) => {
+        const data = await CommonUtils.handleGetProductsPagination(
+            page,
+            per_page
+        );
+        setProducts((prev) => {
+            return [...prev, ...data];
+        });
+    };
+
+    const handleGetMoreProducts = (value) => {
+        console.log(value);
+        if (value < 5) {
+            handleGetProducts(value, 6);
+        }
+        setPage(value);
+    };
+
+    useEffect(() => {
+        handleGetProducts(1, 6);
+    }, []);
 
     return (
-        <div className="ap">
-            <div className="wrapper">
-                <div className="row align-items-start" style={{ margin: 0 }}>
-                    <div className="col-3 ap__left">
+        <div className='ap'>
+            <div className='wrapper'>
+                <div className='row align-items-start' style={{ margin: 0 }}>
+                    <div className='col-3 ap__left'>
                         <SideBar />
                     </div>
                     <div
-                        className="col-9 ap__right"
+                        className='col-9 ap__right'
                         style={{ backgroundColor: '#fff' }}
                     >
-                        <div className="ap__right__top">
-                            <div className="ap__right__top__left">
-                                <span className="ap__right__top__left__label">
+                        <div className='ap__right__top'>
+                            <div className='ap__right__top__left'>
+                                <span className='ap__right__top__left__label'>
                                     Ưu tiên xem:
                                 </span>
-                                <div className="ap__right__top__left__features">
+                                <div className='ap__right__top__left__features'>
                                     {features.map((fea) => (
                                         <span
                                             onClick={() => setFeature(fea.id)}
@@ -75,7 +85,7 @@ const AllProduct = () => {
                                     ))}
                                 </div>
                             </div>
-                            <div className="ap__right__top__right">
+                            <div className='ap__right__top__right'>
                                 <i
                                     className={`fas fa-th-large ${
                                         isGridLayout === 1 && 'active'
@@ -90,23 +100,15 @@ const AllProduct = () => {
                                 ></i>
                             </div>
                         </div>
+                        <ProductList
+                            products={products}
+                            isGridLayout={isGridLayout}
+                        />
                         <div
-                            className="ap__right__bottom"
-                            style={{
-                                flexDirection: `${
-                                    isGridLayout ? 'row' : 'column'
-                                }`,
-                            }}
+                            hidden={page > 3}
+                            className='ap__right__btn'
+                            onClick={() => handleGetMoreProducts(page + 1)}
                         >
-                            {links.map((item) => (
-                                <Product
-                                    link={item}
-                                    key={item.id}
-                                    listLayout={isGridLayout}
-                                />
-                            ))}
-                        </div>
-                        <div className="ap__right__btn">
                             <span>Xem thêm</span>
                         </div>
                     </div>

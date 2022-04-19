@@ -1,10 +1,10 @@
 const images = [
+    // {
+    //     id: 1,
+    //     src: 'https://images.fpt.shop/unsafe/fit-in/1200x300/filters:quality(90):fill(white)/fptshop.com.vn/Uploads/Originals/2022/3/31/637843642446328541_F-C1_1200x300.png',
+    // },
     {
         id: 1,
-        src: 'https://images.fpt.shop/unsafe/fit-in/1200x300/filters:quality(90):fill(white)/fptshop.com.vn/Uploads/Originals/2022/3/31/637843642446328541_F-C1_1200x300.png',
-    },
-    {
-        id: 2,
         src: 'https://images.fpt.shop/unsafe/fit-in/1200x300/filters:quality(90):fill(white)/fptshop.com.vn/Uploads/Originals/2022/4/12/637853476269617342_F-C1_1200x300.png',
     },
     {
