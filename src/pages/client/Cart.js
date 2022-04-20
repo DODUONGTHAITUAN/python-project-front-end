@@ -8,11 +8,19 @@ import CartSummary from '../../components/Client/Cart/CartSummary';
 import CartProgess from '../../components/Client/Cart/CartProgess';
 import CartPay from '../../components/Client/Cart/CartPay';
 import { connect } from 'react-redux';
-
-const countItemInCart = 1;
+import { useEffect, useState } from 'react';
 
 const Cart = (props) => {
-    console.log(props);
+    const { totalProducts } = props;
+    const [countItemInCart, setCountItemInCart] = useState(totalProducts);
+
+    useEffect(() => {
+        setCountItemInCart(totalProducts);
+    }, [totalProducts]);
+
+    useEffect(() => {
+        document.title = 'Giỏ hàng | Tiki.vn';
+    }, []);
     return (
         <div className='cart'>
             <Header />
@@ -25,9 +33,7 @@ const Cart = (props) => {
                         <div className='container py-5'>
                             <Row className='d-flex justify-content-center my-4'>
                                 <Col className='col-md-8'>
-                                    {/* List item */}
                                     <CartList />
-                                    {/* List item */}
                                     {/* Cart progess */}
                                     <CartProgess />
                                     {/* Cart progess */}
@@ -52,7 +58,7 @@ const Cart = (props) => {
 };
 
 const mapStateToProps = (state) => ({
-    shopping: state.shopping,
+    totalProducts: state.shopping.totalProducts,
 });
 
 export default connect(mapStateToProps, null)(Cart);

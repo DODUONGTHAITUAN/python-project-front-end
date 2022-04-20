@@ -6,7 +6,6 @@ import ProductItem from '../Product/ProductItem';
 
 const PromotionPhone = () => {
     const [products, setProducts] = useState([]);
-    console.log(products);
 
     const handleGetProducts = async (page, per_page) => {
         const data = await CommonUtils.handleGetProductsPagination(

@@ -1,6 +1,5 @@
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
-//import { Redirect } from 'react-router';
 
 import Header from '../../components/Client/Header';
 import Footer from '../../components/Client/Footer';
@@ -8,8 +7,13 @@ import PromotionPhone from '../../components/Client/Section/PromotionPhone';
 import AllProduct from '../../components/Client/AllProduct';
 import SliderList from '../../components/Client/Slider/SliderList';
 import FeaturePhone from '../../components/Client/Section/FeaturePhone';
+import { useEffect } from 'react';
 
 const HomePage = (props) => {
+    useEffect(() => {
+        document.title =
+            'Tiki - Mua hàng online giá tốt, hàng chuẩn, ship nhanh';
+    }, []);
     return (
         <div className='home'>
             <Header />
@@ -35,8 +39,4 @@ const HomePage = (props) => {
     );
 };
 
-const mapStateToProps = (state) => ({
-    isLoggedIn: state.user.isLoggedIn,
-});
-
-export default withRouter(connect(mapStateToProps, null)(HomePage));
+export default withRouter(connect(null, null)(HomePage));

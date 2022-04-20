@@ -9,7 +9,7 @@ const DetailProduct = () => {
         <div className='dp'>
             <Header />
             <main
-                className='dp__content'
+                className='dp__content pt-5'
                 style={{ backgroundColor: '#f8f9fa' }}
             >
                 <div className='wrapper'>

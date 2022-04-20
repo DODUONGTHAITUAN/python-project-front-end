@@ -1,5 +1,5 @@
 import { MDBInput } from 'mdb-react-ui-kit';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 
 import userService from '../../../services/userService';
@@ -27,8 +27,8 @@ const inputs = [
 ];
 
 const LoginForm = (props) => {
-    console.log(props);
     const { active, setTab, userLoginSuccess, userLoginFail, history } = props;
+    console.log(history);
 
     const [info, setInfo] = useState(() => ({
         email: '',
@@ -38,7 +38,7 @@ const LoginForm = (props) => {
     const handleSetInfo = (value, key) => {
         setInfo({
             ...info,
-            [key]: value,
+            [key]: value.trim(),
         });
     };
 
@@ -47,13 +47,15 @@ const LoginForm = (props) => {
             const res = await userService.getUserByEmail(info);
             if (res.data?.code === 0) {
                 userLoginSuccess(res.data.user);
-                history?.push('/');
+                const url = history?.location?.state || '/';
+                history?.push(url);
             } else {
                 userLoginFail();
             }
         }
         return;
     };
+
     return (
         <div className={`tab-pane ${active === account.LOGIN ? 'active' : ''}`}>
             <div>
@@ -68,6 +70,14 @@ const LoginForm = (props) => {
                             value={info[item.key]}
                             onChange={(e) =>
                                 handleSetInfo(e.target.value, item.key)
+                            }
+                            onKeyUp={
+                                item.id === 2
+                                    ? (e) =>
+                                          e.keyCode === 13
+                                              ? handleSubmitInfo()
+                                              : () => {}
+                                    : () => {}
                             }
                         />
                     </div>
@@ -137,7 +147,6 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = (dispatch) => {
     return {
         userLoginSuccess: (userInfo) => {
-            console.log(userInfo);
             return dispatch(userLoginSuccess(userInfo));
         },
         userLoginFail: () => dispatch(userLoginFail()),

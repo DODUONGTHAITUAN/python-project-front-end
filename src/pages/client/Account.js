@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Row, Col } from 'reactstrap';
 import { withRouter } from 'react-router';
 
@@ -12,6 +12,14 @@ const Account = (props) => {
     const [tab, setTab] = useState(account.LOGIN);
 
     const { history } = props;
+
+    useEffect(() => {
+        const title =
+            tab === account.LOGIN
+                ? 'Đăng nhập tài khoản  - Mua sắm Online | tiki.vn'
+                : 'Đăng ký ngay | tiki.vn';
+        document.title = title;
+    }, [tab]);
 
     return (
         <div className='account'>

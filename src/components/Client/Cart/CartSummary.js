@@ -1,3 +1,5 @@
+import { withRouter } from 'react-router-dom';
+import { connect } from 'react-redux';
 import {
     Button,
     Card,
@@ -7,7 +9,16 @@ import {
     ListGroupItem,
 } from 'reactstrap';
 
-const CartSummary = () => {
+const CartSummary = (props) => {
+    const { isLoggedIn, history } = props;
+    console.log(isLoggedIn);
+
+    const handleRedirectLogin = () => {
+        console.log('Hello');
+        if (!isLoggedIn) {
+            history?.push('/login/me', '/cart');
+        }
+    };
     return (
         <Card className='card mb-4'>
             <CardHeader className='card-header py-3'>
@@ -36,8 +47,10 @@ const CartSummary = () => {
                     </ListGroupItem>
                 </ListGroup>
                 <Button
+                    onClick={handleRedirectLogin}
                     className='btn btn-primary btn-lg btn-block'
                     style={{
+                        height: 40,
                         backgroundColor: 'rgb(255, 66, 78)',
                     }}
                 >
@@ -48,4 +61,8 @@ const CartSummary = () => {
     );
 };
 
-export default CartSummary;
+const mapStateToProps = (state) => ({
+    isLoggedIn: state.user.isLoggedIn,
+});
+
+export default withRouter(connect(mapStateToProps, null)(CartSummary));

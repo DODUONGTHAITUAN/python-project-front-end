@@ -1,8 +1,10 @@
 import { useState, useEffect } from 'react';
+import { connect } from 'react-redux';
 
 import SideBar from './Sidebar/SideBar';
 import ProductList from './Product/ProductList';
 import CommonUtils from '../../utils/CommonUtils';
+import { loadCurrentItem } from '../../store/actions/shoppingActions';
 
 const features = [
     {
@@ -27,7 +29,8 @@ const features = [
     },
 ];
 
-const AllProduct = () => {
+const AllProduct = (props) => {
+    const { loadCurrentItem } = props;
     const [isGridLayout, setGridlayout] = useState(1);
     const [feature, setFeature] = useState(features[0].id);
     const [products, setProducts] = useState([]);
@@ -38,21 +41,22 @@ const AllProduct = () => {
             page,
             per_page
         );
+        loadCurrentItem(data);
+        // Store in redux
         setProducts((prev) => {
             return [...prev, ...data];
         });
     };
 
     const handleGetMoreProducts = (value) => {
-        console.log(value);
         if (value < 5) {
-            handleGetProducts(value, 6);
+            handleGetProducts(value, 9);
         }
         setPage(value);
     };
 
     useEffect(() => {
-        handleGetProducts(1, 6);
+        handleGetProducts(1, 9);
     }, []);
 
     return (
@@ -118,4 +122,8 @@ const AllProduct = () => {
     );
 };
 
-export default AllProduct;
+const mapDispatchToProps = (dispatch) => ({
+    loadCurrentItem: (item) => dispatch(loadCurrentItem(item)),
+});
+
+export default connect(null, mapDispatchToProps)(AllProduct);

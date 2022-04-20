@@ -1,5 +1,8 @@
 import { useEffect, useRef, useState } from 'react';
+import { connect } from 'react-redux';
 import { withRouter, useHistory } from 'react-router-dom';
+
+import { addToCart } from '../../../store/actions/shoppingActions';
 
 const plaholder = 'https://dummyimage.com/214x214/ffffff/ffffff.png';
 
@@ -13,13 +16,18 @@ function elementInViewport(el) {
     );
 }
 
-const ProductItem = ({ item, listLayout }) => {
+const ProductItem = ({ item, listLayout, addToCart }) => {
     const [loaded, setLoaded] = useState(false);
     const imgElm = useRef();
 
     const history = useHistory();
-    const handleRedirect = () => {
+    const handleRedirectProductDetail = () => {
         history.push('/detail-product');
+    };
+
+    const handleRedirectCart = (id) => {
+        addToCart(id);
+        history.push('/cart');
     };
 
     const handleGetImg = (value) => {
@@ -55,7 +63,7 @@ const ProductItem = ({ item, listLayout }) => {
                     ref={(value) => handleGetImg(value)}
                     src={plaholder}
                     alt={item?.product_name}
-                    onClick={() => handleRedirect()}
+                    onClick={() => handleRedirectProductDetail()}
                 />
             </div>
             <div className='product__main'>
@@ -90,11 +98,14 @@ const ProductItem = ({ item, listLayout }) => {
                 <div className='product__main__actions'>
                     <button
                         className='product__main__actions__btn-pay'
-                        onClick={handleRedirect}
+                        onClick={() => handleRedirectCart(item.id)}
                     >
                         Mua ngay
                     </button>
-                    <button className='product__main__actions__btn-compare'>
+                    <button
+                        className='product__main__actions__btn-compare'
+                        onClick={handleRedirectProductDetail}
+                    >
                         Xem Chi Tiết
                     </button>
                 </div>
@@ -131,4 +142,12 @@ const ProductItem = ({ item, listLayout }) => {
     );
 };
 
-export default withRouter(ProductItem);
+const mapStateToProps = (state) => ({});
+
+const mapDispatchToProps = (dispatch) => ({
+    addToCart: (id) => dispatch(addToCart(id)),
+});
+
+export default withRouter(
+    connect(mapStateToProps, mapDispatchToProps)(ProductItem)
+);

@@ -2,7 +2,8 @@ import { connect } from 'react-redux';
 import { processLogout } from '../../../store/actions/userActions';
 
 const MyAccount = (props) => {
-    const { processLogout } = props;
+    const { processLogout, userInfo } = props;
+    console.log(userInfo);
     const handleLogoutAccount = () => {
         processLogout();
     };
@@ -19,7 +20,9 @@ const MyAccount = (props) => {
                         height={30}
                         alt='Avatar'
                     />
-                    <span style={{ color: '#fff' }}> Tài khoản</span>
+                    <span style={{ color: '#fff' }}>
+                        {userInfo?.fullName || 'Tài khoản'}
+                    </span>
                 </span>
                 <ul className='profile__menu'>
                     <li
@@ -42,6 +45,7 @@ const MyAccount = (props) => {
 };
 
 const mapStateToProps = (state) => ({
+    userInfo: state.user.userInfo,
     isLoggedIn: state.user.isLoggedIn,
 });
 

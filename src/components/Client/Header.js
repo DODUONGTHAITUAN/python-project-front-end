@@ -44,7 +44,7 @@ const nav = [
 ];
 
 const Header = (props) => {
-    const { isLoggedIn } = props;
+    const { isLoggedIn, totalProducts } = props;
     const history = useHistory();
     return (
         <div className='header__container'>
@@ -85,7 +85,9 @@ const Header = (props) => {
                     >
                         <i className='fas fa-shopping-cart'></i>
                         <span>Giỏ hàng</span>
-                        <span className='header__top__cart__count'>0</span>
+                        <span className='header__top__cart__count'>
+                            {totalProducts || 0}
+                        </span>
                     </div>
                 </div>
                 <div className='header__bottom'>
@@ -114,6 +116,7 @@ const Header = (props) => {
 
 const mapStateToProps = (state) => ({
     isLoggedIn: state.user.isLoggedIn,
+    totalProducts: state.shopping.totalProducts,
 });
 
 export default connect(mapStateToProps, null)(memo(Header));

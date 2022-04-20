@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { withRouter } from 'react-router';
 import { MDBInput } from 'mdb-react-ui-kit';
 
@@ -38,8 +38,14 @@ const inputs = [
     },
 ];
 
+const errMessage = {
+    2: 'Email đã tồn tai',
+    3: 'Xác nhận mật khẩu không khớp',
+};
+
 const Register = (props) => {
-    const { setTab } = props;
+    const { setTab, active } = props;
+    const [error, setError] = useState(false);
     const [info, setInfo] = useState(() => {
         return {
             fullName: '',
@@ -58,21 +64,24 @@ const Register = (props) => {
             ...info,
             [key]: value,
         });
+        setError(0);
     };
 
     const handleSubmitInfo = async () => {
         const isValid = CommonUtils.handleValidateInfoUser(info);
-        console.log(isValid);
         if (isValid.code === 0) {
             const res = await userService.createNewUser(info);
-            console.log(res);
             if (res.data?.code === 0) {
                 setTab(account.LOGIN);
+                setError(0);
+            } else if (res.data?.code === 2) {
+                setError(2);
             }
+        } else {
+            setError(3);
         }
     };
 
-    const { active } = props;
     return (
         <div
             className={`tab-pane ${
@@ -95,6 +104,16 @@ const Register = (props) => {
                         />
                     </div>
                 ))}
+                <span
+                    className='d-inline-block fw-lighter'
+                    style={{
+                        color: 'red',
+                        fontSize: 12,
+                        transform: 'translateY(-10px)',
+                    }}
+                >
+                    * {errMessage[error]}
+                </span>
                 {/* 2 column grid layout */}
                 <div className='form-check d-flex justify-content-start mb-4'>
                     <input

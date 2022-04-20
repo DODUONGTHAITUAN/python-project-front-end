@@ -1,4 +1,12 @@
-const ProductView = () => {
+import { useEffect } from 'react';
+import { connect } from 'react-redux';
+import { withRouter } from 'react-router';
+
+const ProductView = (props) => {
+    useEffect(() => {
+        document.title = 'Xiaomi Redmi Note 11 4GB - 64GB';
+    }, []);
+    const { history } = props;
     return (
         <div className='pw'>
             <div className='pw__heading'>
@@ -89,7 +97,10 @@ const ProductView = () => {
                         </div>
                     </div>
                     <div className='pw__main__right__actions'>
-                        <button className='pw__main__right__actions__pay-now'>
+                        <button
+                            className='pw__main__right__actions__pay-now'
+                            onClick={() => history?.push('/cart')}
+                        >
                             Mua ngay
                         </button>
                         <button className='pw__main__right__actions__add-to-cart'>
@@ -102,4 +113,9 @@ const ProductView = () => {
     );
 };
 
-export default ProductView;
+const mapStateToProps = (state) => ({});
+const mapDispatchToProps = (dispatch) => ({});
+
+export default withRouter(
+    connect(mapStateToProps, mapDispatchToProps)(ProductView)
+);

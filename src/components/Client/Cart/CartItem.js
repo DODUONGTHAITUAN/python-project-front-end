@@ -4,12 +4,15 @@ import { Button, Col, Input, Row } from 'reactstrap';
 
 import {
     removeFromCart,
-    addToCart,
     adjustQty,
 } from '../../../store/actions/shoppingActions';
 
 const CartItem = (props) => {
-    const [quantity, setQuantity] = useState(1);
+    const { item, cartList, removeFromCart } = props;
+    const [quantity, setQuantity] = useState(() => {
+        const itemInCart = cartList.find((p) => p.id === item.id);
+        return itemInCart.quantity;
+    });
 
     const handleAdjustQty = (id, value) => {
         if (value > 0) {
@@ -30,7 +33,8 @@ const CartItem = (props) => {
                     data-mdb-ripple-color='light'
                 >
                     <img
-                        src='https://mdbcdn.b-cdn.net/img/Photos/Horizontal/E-commerce/Vertical/14a.webp'
+                        src={item?.image}
+                        // src='https://mdbcdn.b-cdn.net/img/Photos/Horizontal/E-commerce/Vertical/14a.webp'
                         className='w-100'
                         alt=''
                     />
@@ -47,11 +51,16 @@ const CartItem = (props) => {
             </Col>
             <Col className='col-lg-4 col-md-6 mb-4 mb-lg-0 d-flex flex-column justify-content-center'>
                 <div className='mb-3'>
-                    <h4 className='text-primary'>Headphones Bose 35 II</h4>
+                    <h4 className='text-primary'>
+                        {item && item.product_name}
+                    </h4>
                     <h5 style={{ color: '#9e9e9e' }}>Color: Red</h5>
                 </div>
                 <div>
-                    <Button className='btn btn-primary btn-sm me-1 mb-2'>
+                    <Button
+                        className='btn btn-primary btn-sm me-1 mb-2'
+                        onClick={() => removeFromCart(item.id)}
+                    >
                         <i className='fas fa-trash' />
                     </Button>
                     <Button className='btn btn-danger btn-sm mb-2'>
@@ -66,7 +75,7 @@ const CartItem = (props) => {
                 >
                     <Button
                         className='btn btn-primary px-3 me-2'
-                        onClick={() => handleAdjustQty(1, quantity - 1)}
+                        onClick={() => handleAdjustQty(item.id, quantity - 1)}
                     >
                         <i className='fas fa-minus' />
                     </Button>
@@ -74,7 +83,7 @@ const CartItem = (props) => {
 
                     <Button
                         className='btn btn-primary px-3 ms-2'
-                        onClick={() => handleAdjustQty(1, quantity + 1)}
+                        onClick={() => handleAdjustQty(item.id, quantity + 1)}
                     >
                         <i className='fas fa-plus' />
                     </Button>
@@ -90,7 +99,9 @@ const CartItem = (props) => {
     );
 };
 
-const mapStateToProps = (state) => ({});
+const mapStateToProps = (state) => ({
+    cartList: state.shopping.cart,
+});
 
 const mapDispatchToProps = (dispatch) => ({
     removeFromCart: (id) => dispatch(removeFromCart(id)),
