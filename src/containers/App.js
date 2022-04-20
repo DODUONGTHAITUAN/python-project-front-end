@@ -1,26 +1,27 @@
-import React, { Component, Fragment } from "react";
-import { connect } from "react-redux";
-import { Route, Switch } from "react-router-dom";
-import { ConnectedRouter as Router } from "connected-react-router";
-import { history } from "../redux";
-import { ToastContainer } from "react-toastify";
+import React, { Component, Fragment } from 'react';
+import { connect } from 'react-redux';
+import { Route, Switch } from 'react-router-dom';
+import { ConnectedRouter as Router } from 'connected-react-router';
+import { history } from '../redux';
+import { ToastContainer } from 'react-toastify';
 
 import {
     userIsAuthenticated,
     userIsNotAuthenticated,
-} from "../hoc/authentication";
+} from '../hoc/authentication';
 
-import { path } from "../utils";
+import { path } from '../utils';
 
-import Client from "../routes/Client";
-import Login from "../pages/Login";
-import System from "../routes/System";
+import Client from '../routes/Client';
+import Login from '../pages/Login';
+import System from '../routes/System';
 
-import { CustomToastCloseButton } from "../components/Customs/CustomToast";
-import ConfirmModal from "../components/Customs/ConfirmModal";
-import CustomScrollbars from "../components/Customs/CustomScrollbars";
-import DetailProduct from "../pages/client/DetailProduct";
-import Cart from "../pages/client/Cart";
+import { CustomToastCloseButton } from '../components/Customs/CustomToast';
+import ConfirmModal from '../components/Customs/ConfirmModal';
+import CustomScrollbars from '../components/Customs/CustomScrollbars';
+import DetailProduct from '../pages/client/DetailProduct';
+import Cart from '../pages/client/Cart';
+import Account from '../pages/client/Account';
 
 class App extends Component {
     handlePersistorState = () => {
@@ -45,10 +46,10 @@ class App extends Component {
         return (
             <Fragment>
                 <Router history={history}>
-                    <div className="main-container">
+                    <div className='main-container'>
                         <ConfirmModal />
-                        <div className="content-container">
-                            <CustomScrollbars style={{ height: "100vh" }}>
+                        <div className='content-container'>
+                            <CustomScrollbars style={{ height: '100vh' }}>
                                 <Switch>
                                     <Route
                                         path={path.HOME}
@@ -56,11 +57,12 @@ class App extends Component {
                                         component={Client}
                                     />
                                     <Route
-                                        path="/detail-product"
+                                        path='/detail-product'
                                         component={DetailProduct}
                                     />
-                                    <Route path="/cart" component={Cart} />
+                                    <Route path='/cart' component={Cart} />
                                     <Route
+                                        exact
                                         path={path.LOGIN}
                                         component={userIsNotAuthenticated(
                                             Login
@@ -70,13 +72,17 @@ class App extends Component {
                                         path={path.SYSTEM}
                                         component={userIsAuthenticated(System)}
                                     />
+                                    <Route
+                                        path='/login/me'
+                                        component={Account}
+                                    />
                                 </Switch>
                             </CustomScrollbars>
                         </div>
                         <ToastContainer
-                            className="toast-container"
-                            toastClassName="toast-item"
-                            bodyClassName="toast-item-body"
+                            className='toast-container'
+                            toastClassName='toast-item'
+                            bodyClassName='toast-item-body'
                             autoClose={false}
                             hideProgressBar={true}
                             pauseOnHover={false}

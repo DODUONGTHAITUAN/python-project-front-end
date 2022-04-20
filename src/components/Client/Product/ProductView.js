@@ -10,7 +10,8 @@ const ProductView = () => {
             <div className='pw__main'>
                 <div className='pw__main__left'>
                     <img
-                        src='https://images.fpt.shop/unsafe/fit-in/585x390/filters:quality(90):fill(white)/fptshop.com.vn/Uploads/Originals/2022/1/27/637788717449466537_xiaomi-redmi-note-11-xam-1.jpg'
+                        src='https://images.fpt.shop/unsafe/fit-in/580x390/filters:quality(90):fill(white)/fptshop.com.vn/Uploads/Originals/2022/3/11/637825879369097743_iphone-13-pro-max-dd-1.jpg'
+                        width={'100%'}
                         alt='product-view'
                     />
                     <div className='pw__main__left__features'>

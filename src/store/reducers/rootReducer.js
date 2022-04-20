@@ -26,12 +26,18 @@ const shoppingPersistConfig = {
     key: 'shopping',
 };
 
+const userPersistConfig = {
+    ...persistCommonConfig,
+    key: 'user',
+    //whitelist: ['isLoggedIn', 'user'],
+};
+
 const createRootReducer = (history) =>
     combineReducers({
         router: connectRouter(history),
         shopping: persistReducer(shoppingPersistConfig, shoppingReducer),
         admin: persistReducer(adminPersistConfig, adminReducer),
-        user: userReducer,
+        user: persistReducer(userPersistConfig, userReducer),
         app: appReducer,
     });
 

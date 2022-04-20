@@ -35,6 +35,34 @@ class CommonUtils {
         }
         return [];
     }
+
+    static handleValidateInfoUser(user) {
+        if (
+            user.fullName &&
+            user.email &&
+            user.password &&
+            user.confirmPassword &&
+            user.phonenumber &&
+            user.address
+        ) {
+            if (user.password === user.confirmPassword) {
+                return {
+                    errMess: 'success',
+                    code: 0,
+                };
+            } else {
+                return {
+                    errMess: 'Confirm password invalid!',
+                    code: 1,
+                };
+            }
+        } else {
+            return {
+                code: 2,
+                errMess: 'Missing field requied',
+            };
+        }
+    }
 }
 
 export default CommonUtils;

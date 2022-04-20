@@ -39,3 +39,8 @@ export const YesNoObj = {
     YES: 'Y',
     NO: 'N',
 };
+
+export const account = {
+    LOGIN: 'LOGIN',
+    REGISTER: 'REGISTER',
+};

@@ -10,6 +10,8 @@ const actionTypes = Object.freeze({
 
     //user
     ADD_USER_SUCCESS: 'ADD_USER_SUCCESS',
+    USER_LOGIN_SUCCESS: 'USER_LOGIN_SUCCESS',
+    USER_LOGIN_FAIL: 'USER_LOGIN_FAIL',
 
     // Cart
     ADD_TO_CART: 'ADD_TO_CART',

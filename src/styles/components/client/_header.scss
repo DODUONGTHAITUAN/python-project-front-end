@@ -1,11 +1,12 @@
 .header__container {
     background-color: rgb(26, 148, 255);
     color: #fff;
-    height: 100px;
+    height: 120px;
 }
 
 .header {
     &__top {
+        padding-top: 20px;
         height: 60px;
         @include flex(center);
         &__logo {

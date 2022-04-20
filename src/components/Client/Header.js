@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { useHistory } from 'react-router';
 
 import logo from '../../assets/images/logo.png';
+import MyAccount from './Account/MyAccount';
 
 const nav = [
     {
@@ -42,7 +43,8 @@ const nav = [
     },
 ];
 
-const Header = () => {
+const Header = (props) => {
+    const { isLoggedIn } = props;
     const history = useHistory();
     return (
         <div className='header__container'>
@@ -66,10 +68,16 @@ const Header = () => {
                         </button>
                     </div>
                     <div className='header__top__acc'>
-                        <i className='far fa-user'></i>
-                        <span onClick={() => history.push('/login')}>
-                            Đăng nhập
-                        </span>
+                        {isLoggedIn ? (
+                            <MyAccount />
+                        ) : (
+                            <>
+                                <i className='far fa-user'></i>
+                                <span onClick={() => history.push('/login/me')}>
+                                    Đăng nhập
+                                </span>
+                            </>
+                        )}
                     </div>
                     <div
                         className='header__top__cart'
@@ -104,4 +112,8 @@ const Header = () => {
     );
 };
 
-export default connect(null, null)(memo(Header));
+const mapStateToProps = (state) => ({
+    isLoggedIn: state.user.isLoggedIn,
+});
+
+export default connect(mapStateToProps, null)(memo(Header));
