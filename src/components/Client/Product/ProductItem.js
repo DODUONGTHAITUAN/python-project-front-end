@@ -21,8 +21,10 @@ const ProductItem = ({ item, listLayout, addToCart }) => {
     const imgElm = useRef();
 
     const history = useHistory();
-    const handleRedirectProductDetail = () => {
-        history.push('/detail-product');
+    const handleRedirectProductDetail = (item) => {
+        const { product_name, id } = item;
+        const productnName = product_name.split(' ').join('-').toLowerCase();
+        history.push(`/detail-product/${productnName}/${id}`);
     };
 
     const handleRedirectCart = (id) => {
@@ -63,7 +65,7 @@ const ProductItem = ({ item, listLayout, addToCart }) => {
                     ref={(value) => handleGetImg(value)}
                     src={plaholder}
                     alt={item?.product_name}
-                    onClick={() => handleRedirectProductDetail()}
+                    onClick={() => handleRedirectProductDetail(item)}
                 />
             </div>
             <div className='product__main'>
@@ -104,7 +106,7 @@ const ProductItem = ({ item, listLayout, addToCart }) => {
                     </button>
                     <button
                         className='product__main__actions__btn-compare'
-                        onClick={handleRedirectProductDetail}
+                        onClick={() => handleRedirectProductDetail(item)}
                     >
                         Xem Chi Tiết
                     </button>

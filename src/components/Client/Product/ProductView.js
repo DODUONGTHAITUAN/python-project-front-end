@@ -1,25 +1,24 @@
 import { useEffect } from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
+import { addToCart } from '../../../store/actions/shoppingActions';
 
 const ProductView = (props) => {
     useEffect(() => {
         document.title = 'Xiaomi Redmi Note 11 4GB - 64GB';
     }, []);
-    const { history } = props;
+    const { history, addToCart, productItem } = props;
     return (
         <div className='pw'>
             <div className='pw__heading'>
                 <div className='pw__heading__left'>
-                    <span>Xiaomi Redmi Note 11 4GB - 64GB</span>
+                    <span>{productItem && productItem.product_name}</span>
                 </div>
                 <div className='pw__heading__right d-flex align-items-center gap-2'>
                     <div className='pw__heading__right__starts d-flex algin-items-center gap-1'>
-                        <i className='fas fa-star'></i>
-                        <i className='fas fa-star'></i>
-                        <i className='fas fa-star'></i>
-                        <i className='fas fa-star'></i>
-                        <i className='fas fa-star'></i>
+                        {[1, 2, 3, 4, 5].map((item) => (
+                            <i className='fas fa-star' key={item}></i>
+                        ))}
                     </div>
                     <div className='pw__heading__right__reviews'>
                         15 đánh giá |
@@ -113,7 +112,12 @@ const ProductView = (props) => {
                         >
                             Mua ngay
                         </button>
-                        <button className='pw__main__right__actions__add-to-cart btn btn-danger'>
+                        <button
+                            className='pw__main__right__actions__add-to-cart btn btn-danger'
+                            onClick={() =>
+                                addToCart(productItem ? productItem.id : 1)
+                            }
+                        >
                             <i className='fas fa-cart-arrow-down'></i>
                             <span>Thêm vào giỏ hàng</span>
                         </button>
@@ -125,7 +129,9 @@ const ProductView = (props) => {
 };
 
 const mapStateToProps = (state) => ({});
-const mapDispatchToProps = (dispatch) => ({});
+const mapDispatchToProps = (dispatch) => ({
+    addToCart: (itemId) => dispatch(addToCart(itemId)),
+});
 
 export default withRouter(
     connect(mapStateToProps, mapDispatchToProps)(ProductView)

@@ -22,6 +22,8 @@ import CustomScrollbars from '../components/Customs/CustomScrollbars';
 import DetailProduct from '../pages/client/DetailProduct';
 import Cart from '../pages/client/Cart';
 import Account from '../pages/client/Account';
+import MyPurchase from '../pages/client/MyPurchase';
+import MyAccount from '../pages/client/MyAccount';
 
 class App extends Component {
     handlePersistorState = () => {
@@ -57,7 +59,7 @@ class App extends Component {
                                         component={Client}
                                     />
                                     <Route
-                                        path='/detail-product'
+                                        path='/detail-product/:product_name/:id'
                                         component={DetailProduct}
                                     />
                                     <Route path='/cart' component={Cart} />
@@ -75,6 +77,14 @@ class App extends Component {
                                     <Route
                                         path='/login/me'
                                         component={Account}
+                                    />
+                                    <Route
+                                        path={'/user/purchase'}
+                                        component={MyPurchase}
+                                    />
+                                    <Route
+                                        path={'/user/account'}
+                                        component={MyAccount}
                                     />
                                 </Switch>
                             </CustomScrollbars>

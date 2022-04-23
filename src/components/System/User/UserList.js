@@ -43,7 +43,11 @@ const UserList = (props) => {
             <thead>
                 <tr>
                     {ths.map((item) => (
-                        <th scope='col' style={getStyle(item.width)}>
+                        <th
+                            scope='col'
+                            style={getStyle(item.width)}
+                            key={item.id}
+                        >
                             {item.label}
                         </th>
                     ))}

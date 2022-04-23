@@ -8,4 +8,10 @@ productService.handleGetProductsPagination = (data) => {
     });
 };
 
+productService.handlegetProductById = (id) => {
+    return axios.get('/product/get-product-by-id', {
+        params: { id },
+    });
+};
+
 export default productService;

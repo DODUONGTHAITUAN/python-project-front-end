@@ -20,6 +20,9 @@ const userService = {
     getUserByEmail: (data) => {
         return axios.post('/user/get-by-email', { ...data });
     },
+    handleVerifyEmail: (email) => {
+        return axios.post('/user/verify-account', { email });
+    },
 };
 
 export default userService;

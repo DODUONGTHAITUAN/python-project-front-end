@@ -1,5 +1,5 @@
 import { MDBInput } from 'mdb-react-ui-kit';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { connect } from 'react-redux';
 
 import userService from '../../../services/userService';
@@ -43,6 +43,7 @@ const LoginForm = (props) => {
     };
 
     const handleSubmitInfo = async () => {
+        console.log('Hello');
         if (info.email && info.password) {
             const res = await userService.getUserByEmail(info);
             if (res.data?.code === 0) {

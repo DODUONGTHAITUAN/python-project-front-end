@@ -1,14 +1,20 @@
 import { connect } from 'react-redux';
+import { withRouter } from 'react-router';
 import { processLogout } from '../../../store/actions/userActions';
 
-const MyAccount = (props) => {
-    const { processLogout, userInfo } = props;
-    console.log(userInfo);
+const AccountManage = (props) => {
+    const { processLogout, userInfo, history } = props;
     const handleLogoutAccount = () => {
         processLogout();
     };
 
-    const handleRedirectOrder = () => {};
+    const handleRedirectOrder = () => {
+        history?.push('/user/purchase');
+    };
+
+    const handleRedirectMyAccount = () => {
+        history?.push('/user/account');
+    };
 
     return (
         <ul className='navbar-nav '>
@@ -31,7 +37,12 @@ const MyAccount = (props) => {
                     >
                         Đơn hàng của tôi
                     </li>
-                    <li className='profile__menu__item'>Chỉnh sửa thông tin</li>
+                    <li
+                        className='profile__menu__item'
+                        onClick={handleRedirectMyAccount}
+                    >
+                        Chỉnh sửa thông tin
+                    </li>
                     <li
                         className='profile__menu__item'
                         onClick={handleLogoutAccount}
@@ -53,4 +64,6 @@ const mapDispatchToProps = (dispatch) => ({
     processLogout: () => dispatch(processLogout()),
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(MyAccount);
+export default withRouter(
+    connect(mapStateToProps, mapDispatchToProps)(AccountManage)
+);

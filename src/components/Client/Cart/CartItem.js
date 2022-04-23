@@ -91,7 +91,7 @@ const CartItem = (props) => {
                 {/* Quantity */}
                 {/* Price */}
                 <p className='text-start text-md-start'>
-                    <strong style={{ marginLeft: 45 }}>$17.99</strong>
+                    <strong style={{ marginLeft: 45 }}>4.999.999đ</strong>
                 </p>
                 {/* Price */}
             </Col>

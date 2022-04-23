@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { useHistory } from 'react-router';
 
 import logo from '../../assets/images/logo.png';
-import MyAccount from './Account/MyAccount';
+import MyAccount from './Account/AccountManage';
 
 const nav = [
     {

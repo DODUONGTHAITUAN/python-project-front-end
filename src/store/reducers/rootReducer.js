@@ -24,6 +24,7 @@ const adminPersistConfig = {
 const shoppingPersistConfig = {
     ...persistCommonConfig,
     key: 'shopping',
+
 };
 
 const userPersistConfig = {
