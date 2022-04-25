@@ -3,7 +3,13 @@ import { connect } from 'react-redux';
 import PurchaseList from '../../components/Client/Account/PurchaseList';
 import Footer from '../../components/Client/Footer';
 import Header from '../../components/Client/Header';
+import EmptyCart from '../../components/Client/Cart/EmptyCart';
 import orderServive from '../../services/orderServive';
+
+const EmptyPurchase = () => {
+    const message = 'Không có đơn hàng nào';
+    return <EmptyCart message={message} />;
+};
 
 const MyPurchase = (props) => {
     const { userInfo } = props;
@@ -33,13 +39,22 @@ const MyPurchase = (props) => {
             <Header />
             <div className='mp__main' style={{ backgroundColor: '#f5f5fa' }}>
                 <div className='wrapper'>
-                    {orders?.length > 0 &&
+                    <h4
+                        className='pt-5 fw-light'
+                        style={{ color: 'rgba(0, 0, 0, 0.6)' }}
+                    >
+                        Đơn hàng của tôi
+                    </h4>
+                    {orders?.length > 0 ? (
                         orders.map((item, i) => (
                             <PurchaseList
                                 lineItems={item.line_items}
                                 key={item.id}
                             />
-                        ))}
+                        ))
+                    ) : (
+                        <EmptyPurchase />
+                    )}
                 </div>
             </div>
             <Footer />

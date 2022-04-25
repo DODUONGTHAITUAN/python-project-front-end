@@ -4,8 +4,8 @@ const PurchaseList = (props) => {
     const { lineItems } = props;
 
     return (
-        <div className='pl py-5'>
-            <h4 className='mb-3'>Đơn hàng của tôi</h4>
+        <div className='pl pb-3'>
+            {/* <h4 className='mb-3'>Đơn hàng của tôi</h4> */}
             {lineItems?.length > 0 &&
                 lineItems.map((item) => (
                     <PurchaseItem item={item} key={item.id} />
