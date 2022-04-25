@@ -1,13 +1,16 @@
 import { useEffect } from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
+
 import { addToCart } from '../../../store/actions/shoppingActions';
+import CommonUtils from '../../../utils/CommonUtils';
 
 const ProductView = (props) => {
-    useEffect(() => {
-        document.title = 'Xiaomi Redmi Note 11 4GB - 64GB';
-    }, []);
     const { history, addToCart, productItem } = props;
+    useEffect(() => {
+        document.title =
+            productItem?.product_name || 'Xiaomi Redmi Note 11 4GB - 64GB';
+    }, [productItem]);
     return (
         <div className='pw'>
             <div className='pw__heading'>
@@ -32,11 +35,16 @@ const ProductView = (props) => {
             </div>
             <div className='pw__main'>
                 <div className='pw__main__left'>
-                    <img
-                        src='https://images.fpt.shop/unsafe/fit-in/580x390/filters:quality(90):fill(white)/fptshop.com.vn/Uploads/Originals/2022/3/11/637825879369097743_iphone-13-pro-max-dd-1.jpg'
-                        width={'100%'}
-                        alt='product-view'
-                    />
+                    <div className='d-flex justify-content-center py-3'>
+                        <img
+                            src={
+                                productItem?.option?.image ||
+                                'https://images.fpt.shop/unsafe/fit-in/580x390/filters:quality(90):fill(white)/fptshop.com.vn/Uploads/Originals/2022/3/11/637825879369097743_iphone-13-pro-max-dd-1.jpg'
+                            }
+                            height={'390px'}
+                            alt='product-view'
+                        />
+                    </div>
                     <div className='pw__main__left__features d-flex align-items-center gap-5 justify-content-center'>
                         <div className='pw__main__left__features__item d-flex align-items-center flex-column'>
                             <i
@@ -63,8 +71,14 @@ const ProductView = (props) => {
                 </div>
                 <div className='pw__main__right'>
                     <div className='pw__main__right__price'>
-                        <span>4.290.000₫</span>
-                        <span>5.290.290₫</span>
+                        <span>
+                            {productItem?.option?.price || '4.290.000'}₫
+                        </span>
+                        <span>
+                            {CommonUtils.increaseCurrency(
+                                productItem?.option?.price || '4.299.000'
+                            )}
+                        </span>
                     </div>
                     <div className='pw__main__right__options'>
                         {[1, 2, 3, 4].map((item) => (

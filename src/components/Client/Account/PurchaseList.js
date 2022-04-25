@@ -1,10 +1,15 @@
 import PurchaseItem from './PurchaseItem';
 
-const PurchaseList = () => {
+const PurchaseList = (props) => {
+    const { lineItems } = props;
+
     return (
         <div className='pl py-5'>
             <h4 className='mb-3'>Đơn hàng của tôi</h4>
-            <PurchaseItem />
+            {lineItems?.length > 0 &&
+                lineItems.map((item) => (
+                    <PurchaseItem item={item} key={item.id} />
+                ))}
         </div>
     );
 };

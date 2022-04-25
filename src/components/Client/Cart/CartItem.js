@@ -6,6 +6,7 @@ import {
     removeFromCart,
     adjustQty,
 } from '../../../store/actions/shoppingActions';
+import CommonUtils from '../../../utils/CommonUtils';
 
 const CartItem = (props) => {
     const { item, cartList, removeFromCart } = props;
@@ -91,7 +92,9 @@ const CartItem = (props) => {
                 {/* Quantity */}
                 {/* Price */}
                 <p className='text-start text-md-start'>
-                    <strong style={{ marginLeft: 45 }}>4.999.999đ</strong>
+                    <strong style={{ marginLeft: 45 }}>
+                        {CommonUtils.formatCurrency(item?.currPrice)}
+                    </strong>
                 </p>
                 {/* Price */}
             </Col>

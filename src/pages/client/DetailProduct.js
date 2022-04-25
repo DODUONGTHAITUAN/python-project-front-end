@@ -13,7 +13,6 @@ const DetailProduct = (props) => {
 
     const handleGetProductById = async (id) => {
         const res = await productService.handlegetProductById(id);
-        console.log(res);
         if (res.data?.code === 0) {
             setProductItem(res.data.data);
         }

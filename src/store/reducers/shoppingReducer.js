@@ -1,4 +1,5 @@
 import actionTypes from '../actions/actionTypes';
+import CommonUtils from '../../utils/CommonUtils';
 
 const INITIAL_STATE = {
     /**
@@ -33,18 +34,27 @@ const handleAddToCartAction = (state, itemId) => {
                     return {
                         ...item,
                         quantity: item.quantity + 1,
+                        currPrice:
+                            (item.quantity + 1) *
+                            CommonUtils.toNumber(
+                                item?.option?.price || '4.999.000'
+                            ),
                     };
                 }
                 return item;
             }),
         ];
     } else {
+        const item = state.products.find((item) => item.id === itemId);
         // No exist
         return [
             ...state.cart,
             {
                 quantity: 1,
-                ...state.products.find((item) => item.id === itemId),
+                ...item,
+                currPrice: CommonUtils.toNumber(
+                    item?.option?.price || '4.999.000'
+                ),
             },
         ];
     }
@@ -63,9 +73,14 @@ const shoppingReducer = (state = INITIAL_STATE, action) => {
                 ...state,
                 cart: cartList,
                 totalProducts: cartList.length,
+                totalPrice: cartList.reduce(
+                    (prev, curr) => prev + curr.currPrice,
+                    0
+                ),
             };
 
         case actionTypes.REMOVE_FROM_CART:
+            console.log('heere');
             const newCart = [
                 ...state.cart.filter((item) => item.id !== action.payload.id),
             ];
@@ -73,20 +88,31 @@ const shoppingReducer = (state = INITIAL_STATE, action) => {
                 ...state,
                 cart: newCart,
                 totalProducts: newCart.length,
+                totalPrice: newCart.reduce(
+                    (prev, curr) => prev + curr.currPrice,
+                    0
+                ),
             };
 
         case actionTypes.ADJUST_QTY:
+            const carts = state.cart.map((item) => {
+                if (item.id === action.payload.id) {
+                    item.quantity = action.payload.qty;
+                    item.currPrice =
+                        action.payload.qty *
+                        CommonUtils.toNumber(
+                            item?.option?.price || '4.999.000'
+                        );
+                }
+                return item;
+            });
             return {
                 ...state,
-                cart: state.cart.map((item) => {
-                    console.log(item.id);
-                    console.log(action.payload.id);
-                    if (item.id === action.payload.id) {
-                        console.log('Yeppp');
-                        item.quantity = action.payload.qty;
-                    }
-                    return item;
-                }),
+                cart: carts,
+                totalPrice: carts.reduce(
+                    (prev, curr) => prev + curr.currPrice,
+                    0
+                ),
             };
 
         case actionTypes.LOAD_CURRENT_ITEM:

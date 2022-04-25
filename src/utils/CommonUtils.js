@@ -63,6 +63,31 @@ class CommonUtils {
             };
         }
     }
+
+    // Convert string to number
+    static toNumber(s) {
+        return Number(s.split('.').join(''));
+    }
+
+    static formatCurrency(num = 4999999) {
+        // return num.toLocaleString('it-IT', {
+        //     style: 'currency',
+        //     currency: 'VND',
+        // });
+        return new Intl.NumberFormat('vi-VN', {
+            style: 'currency',
+            currency: 'VND',
+        }).format(num);
+    }
+
+    static increaseCurrency(numString) {
+        const max = 5000000;
+        const min = 1000000;
+        const num =
+            this.toNumber(numString) +
+            Math.floor(Math.random() * (max - min) + min);
+        return this.formatCurrency(num);
+    }
 }
 
 export default CommonUtils;

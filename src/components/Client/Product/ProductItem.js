@@ -75,7 +75,8 @@ const ProductItem = ({ item, listLayout, addToCart }) => {
                     </div>
                     <div className='product__main__top__price'>
                         <span>
-                            22.990.000 <u>đ</u>
+                            {item?.option?.price || '22.990.000'}
+                            <u>đ</u>
                         </span>
                     </div>
                 </div>
@@ -90,11 +91,15 @@ const ProductItem = ({ item, listLayout, addToCart }) => {
                     </div>
                     <div className='product__main__mid__item'>
                         <i className='fas fa-memory'></i>
-                        <span>4 GB</span>
+                        <span>{`${
+                            item?.option?.ram?.toUpperCase() || '4GB'
+                        }`}</span>
                     </div>
                     <div className='product__main__mid__item'>
                         <i className='fas fa-hdd'></i>
-                        <span>128 GB</span>
+                        <span>{`${
+                            item?.option?.rom?.toUpperCase() || '128GB'
+                        }`}</span>
                     </div>
                 </div>
                 <div className='product__main__actions'>
