@@ -1,15 +1,15 @@
-import React, { Component } from "react";
-import { connect } from "react-redux";
-import { push } from "connected-react-router";
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { push } from 'connected-react-router';
 
-import * as actions from "../store/actions";
-import { KeyCodeUtils, LanguageUtils } from "../utils";
+import * as actions from '../store/actions';
+import { KeyCodeUtils, LanguageUtils } from '../utils';
 
-import userIcon from "../../src/assets/images/user.svg";
-import passIcon from "../../src/assets/images/pass.svg";
-import { FormattedMessage } from "react-intl";
+import userIcon from '../../src/assets/images/user.svg';
+import passIcon from '../../src/assets/images/pass.svg';
+import { FormattedMessage } from 'react-intl';
 
-import adminService from "../services/adminService";
+import adminService from '../services/adminService';
 
 class Login extends Component {
     constructor(props) {
@@ -18,9 +18,9 @@ class Login extends Component {
     }
 
     initialState = {
-        username: "",
-        password: "",
-        loginError: "",
+        username: '',
+        password: '',
+        loginError: '',
     };
 
     state = {
@@ -43,7 +43,7 @@ class Login extends Component {
 
     redirectToSystemPage = () => {
         const { navigate } = this.props;
-        const redirectPath = "/system/user-manage";
+        const redirectPath = '/system/user-manage';
         navigate(`${redirectPath}`);
     };
 
@@ -52,15 +52,15 @@ class Login extends Component {
 
         const { adminLoginSuccess, adminLoginFail } = this.props;
         let loginBody = {
-            username: "admin",
-            password: "123456",
+            username: 'admin',
+            password: '123456',
         };
         //sucess
         let adminInfo = {
-            tlid: "0",
-            tlfullname: "Administrator",
-            custype: "A",
-            accessToken: "eyJhbGciOiJIU",
+            tlid: '0',
+            tlfullname: 'Administrator',
+            custype: 'A',
+            accessToken: 'eyJhbGciOiJIU',
         };
 
         adminLoginSuccess(adminInfo);
@@ -69,7 +69,7 @@ class Login extends Component {
         try {
             adminService.login(loginBody);
         } catch (e) {
-            console.log("error login : ", e);
+            console.log('error login : ', e);
         }
     };
 
@@ -84,11 +84,11 @@ class Login extends Component {
     };
 
     componentDidMount() {
-        document.addEventListener("keydown", this.handlerKeyDown);
+        document.addEventListener('keydown', this.handlerKeyDown);
     }
 
     componentWillUnmount() {
-        document.removeEventListener("keydown", this.handlerKeyDown);
+        document.removeEventListener('keydown', this.handlerKeyDown);
         // fix Warning: Can't perform a React state update on an unmounted component
         this.setState = (state, callback) => {
             return;
@@ -100,63 +100,76 @@ class Login extends Component {
         const { lang } = this.props;
 
         return (
-            <div className="login-wrapper">
-                <div className="login-container">
-                    <div className="form_login">
-                        <h2 className="title">
-                            <FormattedMessage id="login.login" />
+            <div className='login-wrapper'>
+                <div className='login-container'>
+                    <div className='form_login'>
+                        <h2 className='title'>
+                            <FormattedMessage id='login.login' />
                         </h2>
-                        <div className="form-group icon-true">
-                            <img className="icon" src={userIcon} alt="this" />
+                        <div className='form-group icon-true'>
+                            <img className='icon' src={userIcon} alt='this' />
                             <input
                                 placeholder={LanguageUtils.getMessageByKey(
-                                    "login.username",
+                                    'login.username',
                                     lang
                                 )}
-                                id="username"
-                                name="username"
-                                type="text"
-                                className="form-control"
+                                id='username'
+                                name='username'
+                                type='text'
+                                className='form-control'
                                 value={username}
                                 onChange={this.onUsernameChange}
                             />
                         </div>
 
                         <div
-                            id="phone-input-container"
-                            className="form-group icon-true"
+                            id='phone-input-container'
+                            className='form-group icon-true'
                         >
-                            <img className="icon" src={passIcon} alt="this" />
+                            <img className='icon' src={passIcon} alt='this' />
                             <input
                                 placeholder={LanguageUtils.getMessageByKey(
-                                    "login.password",
+                                    'login.password',
                                     lang
                                 )}
-                                id="password"
-                                name="password"
-                                type="password"
-                                className="form-control"
+                                id='password'
+                                name='password'
+                                type='password'
+                                className='form-control'
                                 value={password}
                                 onChange={this.onPasswordChange}
                             />
                         </div>
 
-                        {loginError !== "" && (
-                            <div className="login-error">
-                                <span className="login-error-message">
+                        {loginError !== '' && (
+                            <div className='login-error'>
+                                <span className='login-error-message'>
                                     {loginError}
                                 </span>
                             </div>
                         )}
 
-                        <div className="form-group login">
+                        <div className='form-group login'>
                             <input
                                 ref={this.btnLogin}
-                                id="btnLogin"
-                                type="submit"
-                                className="btn"
+                                id='btnLogin'
+                                type='submit'
+                                className='btn'
                                 value={LanguageUtils.getMessageByKey(
-                                    "login.login",
+                                    'login.login',
+                                    lang
+                                )}
+                                onClick={this.processLogin}
+                            />
+                        </div>
+                        <div className='form-group login'>
+                            <input
+                                ref={this.btnLogin}
+                                id='btnLogin'
+                                type='submit'
+                                className='btn'
+                                value={LanguageUtils.getMessageByKey(
+                                    'login.login',
                                     lang
                                 )}
                                 onClick={this.processLogin}

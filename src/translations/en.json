@@ -34,6 +34,9 @@
                 "product-manage": "Package manage",
                 "register-package-group-or-account": "Register service package for group/account"
             },
+            "system-product": {
+                "header": "System Product"
+            },
             "system-parameter": {
                 "header": "System-parameter"
             }
