@@ -71,6 +71,13 @@ const DetailProduct = () => {
     const [selectedBrand, setSelectBrand] = useState({});
     const [selectedFeature, setSelectFeature] = useState({});
     const [selects, setSelects] = useState([]);
+    const [detail, setDetail] = useState(() => ({
+        contentHTML: '',
+        sim_slots: '',
+        batteryText: '',
+        screenText: '',
+        contentMarkdown: '',
+    }));
 
     useEffect(() => {
         const group = {
@@ -82,12 +89,13 @@ const DetailProduct = () => {
         setSelects(createSelects(group));
     }, []);
 
-    console.log({
-        selectedOs,
-        selectedBattery,
-        selectedFeature,
-        selectedBrand,
-    });
+    const handleSetDetail = (key, value) => {
+        console.log(key);
+        setDetail((prev) => ({
+            ...prev,
+            [key]: value,
+        }));
+    };
 
     const mdParser = new MarkdownIt(/* Markdown-it options */);
     const handleEditorChange = ({ html, text }) => {
@@ -106,7 +114,12 @@ const DetailProduct = () => {
                 </Row>
                 <Row className='mt-4'>
                     {inputs.map((item) => (
-                        <DetailProductInput item={item} key={item.id} />
+                        <DetailProductInput
+                            item={item}
+                            key={item.id}
+                            handleSetDetail={handleSetDetail}
+                            detail={detail}
+                        />
                     ))}
                     {selects &&
                         selects.map((item) => (

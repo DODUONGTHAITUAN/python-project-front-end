@@ -17,44 +17,67 @@ const styled = {
     marginBottom: '20px',
 };
 
+const fieldProduct = {
+    productName: '',
+    imageLink: '',
+    cpu: '',
+    gpu: '',
+    origin: '',
+    productDate: '',
+    brandID: '',
+};
+
 const ProductModal = (props) => {
     // State
-    const { toggleProductModal, setToggleProductModal, type, brands } = props;
+    const {
+        toggleProductModal,
+        setToggleProductModal,
+        type,
+        brands,
+        handleCreateProduct,
+    } = props;
     const [selectedBrand, setSelectedBrand] = useState(brands[0]);
-    const [productName, setProductName] = useState('');
-    const [imageLink, setImageLink] = useState('');
-    const [cpu, set_CPU] = useState('');
-    const [gpu, set_GPU] = useState('');
-    const [origin, setOrigin] = useState('');
-    const [productDate, setProductDate] = useState('');
+    const [product, setProduct] = useState(() => ({
+        ...fieldProduct,
+        brandID: selectedBrand?.value || '',
+    }));
+    const { productName, imageLink, cpu, gpu, origin, productDate } = product;
 
-    const handleGetData = () => {
-        const data = {
-            productName,
-            image: imageLink,
-            cpu,
-            gpu,
-            origin,
-            productDate,
-        };
-        return data;
+    const handleClearFieldProduct = () => {
+        setProduct({ ...fieldProduct, brandID: '' });
+    };
+
+    const handleSetProduct = (key, value) => {
+        setProduct((prev) => ({
+            ...prev,
+            [key]: value,
+        }));
     };
 
     const verifyData = (data) => {
         return Object.keys(data).every((key) => data[key] !== '');
     };
-    const handleSaveChangesData = () => {
-        const data = handleGetData();
-        console.log(verifyData(data));
-        //        setToggleProductModal(!toggleProductModal);
+
+    const handleSaveChangesData = async () => {
+        if (verifyData(product)) {
+            handleCreateProduct(product);
+            handleClearFieldProduct();
+        }
     };
 
     // Call API
     useEffect(() => {
         setSelectedBrand(brands[0]);
     }, [brands]);
+
+    useEffect(() => {
+        setProduct((prev) => ({
+            ...prev,
+            brandID: selectedBrand?.value || '',
+        }));
+    }, [selectedBrand]);
     return (
-        <div className='pmo hellowordl'>
+        <div className='pmo'>
             <Modal
                 size='lg'
                 className='pmo'
@@ -80,7 +103,10 @@ const ProductModal = (props) => {
                                         id='product_name'
                                         placeholder='SamSung....'
                                         onChange={(e) =>
-                                            setProductName(e.target.value)
+                                            handleSetProduct(
+                                                'productName',
+                                                e.target.value
+                                            )
                                         }
                                     />
                                 </FormGroup>
@@ -93,7 +119,10 @@ const ProductModal = (props) => {
                                         value={imageLink}
                                         placeholder='Enter link image....'
                                         onChange={(e) =>
-                                            setImageLink(e.target.value)
+                                            handleSetProduct(
+                                                'imageLink',
+                                                e.target.value
+                                            )
                                         }
                                     />
                                 </FormGroup>
@@ -108,7 +137,10 @@ const ProductModal = (props) => {
                                         placeholder='CPU...'
                                         value={cpu}
                                         onChange={(e) =>
-                                            set_CPU(e.target.value)
+                                            handleSetProduct(
+                                                'cpu',
+                                                e.target.value
+                                            )
                                         }
                                     />
                                 </FormGroup>
@@ -121,7 +153,10 @@ const ProductModal = (props) => {
                                         id='gpu'
                                         placeholder='GPU....'
                                         onChange={(e) =>
-                                            set_GPU(e.target.value)
+                                            handleSetProduct(
+                                                'gpu',
+                                                e.target.value
+                                            )
                                         }
                                     />
                                 </FormGroup>
@@ -141,10 +176,13 @@ const ProductModal = (props) => {
                                     <Label for='origin'>Origin</Label>
                                     <Input
                                         id='origin'
-                                        placeholder='with a placeholder'
+                                        placeholder='Origin...'
                                         value={origin}
                                         onChange={(e) =>
-                                            setOrigin(e.target.value)
+                                            handleSetProduct(
+                                                'origin',
+                                                e.target.value
+                                            )
                                         }
                                     />
                                 </FormGroup>
@@ -156,10 +194,13 @@ const ProductModal = (props) => {
                                     </Label>
                                     <Input
                                         id='product_date'
-                                        placeholder='password placeholder'
+                                        placeholder='product date...'
                                         value={productDate}
                                         onChange={(e) =>
-                                            setProductDate(e.target.value)
+                                            handleSetProduct(
+                                                'productDate',
+                                                e.target.value
+                                            )
                                         }
                                     />
                                 </FormGroup>

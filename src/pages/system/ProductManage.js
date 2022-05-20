@@ -11,6 +11,21 @@ import productService from '../../services/productService';
 import CommonUtils from '../../utils/CommonUtils';
 import { types, keyMaps } from '../../utils/constant';
 
+const getNewTotalPage = (type, totalPages, per_page) => {
+    let newTotalPage;
+    switch (type) {
+        case 'CREATE':
+            newTotalPage = Math.floor((totalPages * per_page + 1) / per_page);
+            break;
+        case 'DELETE':
+            newTotalPage = Math.floor((totalPages * per_page - 1) / per_page);
+            break;
+        default:
+            break;
+    }
+    return newTotalPage;
+};
+
 const ProductManage = () => {
     // Define state
     const [toggleProductModal, setToggleProductModal] = useState(false);
@@ -18,6 +33,16 @@ const ProductManage = () => {
     const [selectedBrand, setSelectedBrand] = useState({});
     const [products, setProducts] = useState([]);
     const [filterProducts, setFiterProducts] = useState([]);
+    const [totalPages, setTotalPages] = useState(1);
+
+    const handleCreateProduct = async (product) => {
+        const data = await productService.handleCreateProduct(product);
+        if (data.data.code === 0) {
+            const newTotalPage = getNewTotalPage('CREATE', totalPages, 4);
+            setToggleProductModal(!toggleProductModal);
+            handleGetProducts(newTotalPage, 4);
+        }
+    };
 
     // Handle logic
     const handleGetAllcodeByType = async (type) => {
@@ -31,12 +56,24 @@ const ProductManage = () => {
         }
     };
 
+    const handleDeleteProduct = async (id) => {
+        const res = await productService.handleDeleteProduct(id);
+        if (res.data?.code === 0) {
+            const newTotalPage = getNewTotalPage('DELETE', totalPages, 4);
+            console.log({ totalPages, newTotalPage });
+            handleGetProducts(newTotalPage, 4);
+            setTotalPages(newTotalPage);
+        }
+    };
+
     const handleGetProducts = async (page, per_page) => {
-        const data = await CommonUtils.handleGetProductsPagination(
-            page,
-            per_page
-        );
-        setProducts(data);
+        const data = { page, per_page };
+        const res = await productService.handleGetProductsPagination(data);
+        if (res.data?.code === 0) {
+            setProducts(res.data.data.products);
+            setTotalPages(res.data.data.total_pages);
+        }
+        return [];
     };
     useEffect(() => {
         handleGetAllcodeByType(keyMaps.BRAND);
@@ -75,7 +112,8 @@ const ProductManage = () => {
                     </Col>
                     <Col className='col-md-6'>
                         <Button
-                            className='btn btn-wraning pm__add-new-product'
+                            className='btn  pm__add-new-product'
+                            style={{ backgroundColor: '#0071ba' }}
                             onClick={() =>
                                 setToggleProductModal(!toggleProductModal)
                             }
@@ -86,7 +124,10 @@ const ProductManage = () => {
                     </Col>
                 </Row>
                 <Row className='row gx-3 mb3'>
-                    <ProductList products={filterProducts} />
+                    <ProductList
+                        products={filterProducts}
+                        handleDeleteProduct={handleDeleteProduct}
+                    />
                 </Row>
             </div>
             {/* <Pagination /> */}
@@ -94,7 +135,7 @@ const ProductManage = () => {
                 previousLabel={'<<'}
                 nextLabel={'>>'}
                 breakLabel={'...'}
-                pageCount={7}
+                pageCount={totalPages}
                 marginPagesDisplayed={2}
                 containerClassName={'pagination justify-content-center'}
                 pageClassName={'page-item'}
@@ -106,15 +147,16 @@ const ProductManage = () => {
                 breakClassName={'page-item'}
                 breakLinkClassName={'page-link'}
                 activeClassName={'active'}
-                onPageChange={({ selected }) =>
-                    handleGetProducts(selected + 1, 4)
-                }
+                onPageChange={({ selected }) => {
+                    handleGetProducts(selected + 1, 4);
+                }}
             />
             <ProductModal
                 brands={brands}
                 toggleProductModal={toggleProductModal}
                 setToggleProductModal={setToggleProductModal}
                 type={types.NEW}
+                handleCreateProduct={handleCreateProduct}
             />
         </div>
     );

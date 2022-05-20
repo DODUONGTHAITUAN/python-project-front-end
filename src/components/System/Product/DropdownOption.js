@@ -1,5 +1,5 @@
-import { useState } from 'react';
 import { withRouter } from 'react-router';
+import productService from '../../../services/productService';
 
 const ul = [
     {
@@ -18,10 +18,14 @@ const ul = [
         id: 4,
         title: 'View',
     },
+    {
+        id: 5,
+        title: 'Delete',
+    },
 ];
 
 const DropdownOption = (props) => {
-    const { history, match, id } = props;
+    const { history, match, id, handleDeleteProduct } = props;
     const handleUpdateProduct = () => {
         const url = match?.url ? `${match.url}/detail-product/${id}` : '';
         history?.push && history.push(url);
@@ -32,19 +36,22 @@ const DropdownOption = (props) => {
         history?.push && history.push(url);
     };
 
-    const handleGetActions = (id) => {
-        switch (id) {
+    const handleGetActions = (actionId) => {
+        switch (actionId) {
             case 2:
                 handleUpdateProduct();
                 break;
             case 3:
                 handlUpdateOptions();
                 break;
+
+            case 5:
+                handleDeleteProduct(id);
+                break;
             default:
                 break;
         }
     };
-    // handleUpdateProduct();
     return (
         <div className='dropdown-container' tabIndex={-1}>
             <div className='fas fa-ellipsis-v three-dots'></div>

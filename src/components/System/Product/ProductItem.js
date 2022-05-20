@@ -30,7 +30,7 @@ const tds = [
 ];
 
 const ProductItem = (props) => {
-    const { item } = props;
+    const { item, handleDeleteProduct } = props;
     return (
         <li className='table-row'>
             {tds.map((item_td) => (
@@ -39,7 +39,10 @@ const ProductItem = (props) => {
                 </div>
             ))}
             <div className='col col-6 options'>
-                <DropdownOption id={item.id} />
+                <DropdownOption
+                    id={item.id}
+                    handleDeleteProduct={handleDeleteProduct}
+                />
             </div>
         </li>
     );

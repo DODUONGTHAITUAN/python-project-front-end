@@ -42,6 +42,7 @@ const AllProduct = (props) => {
             per_page
         );
         loadCurrentItem(data);
+        console.log(data);
         // Store in redux
         setProducts((prev) => {
             return [...prev, ...data];
