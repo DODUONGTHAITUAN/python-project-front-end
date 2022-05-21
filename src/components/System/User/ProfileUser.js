@@ -87,6 +87,7 @@ const ProfileUser = (props) => {
 
         let res = {};
         if (type === types.NEW) {
+            console.log('Hello');
             // Call API
             res = await userService.createNewUser(data);
 

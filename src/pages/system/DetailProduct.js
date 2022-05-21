@@ -1,17 +1,20 @@
 import MarkdownIt from 'markdown-it';
 import { useEffect, useState } from 'react';
 import MdEditor from 'react-markdown-editor-lite';
+import { withRouter } from 'react-router';
 import { Button, Col, Row } from 'reactstrap';
 
 import DetailProductInput from '../../components/System/DetailProduct/DetailProductInput';
 import DetailProductSelect from '../../components/System/DetailProduct/DetailProductSelect';
 import { keyMaps } from '../../utils/constant';
+import detailProductService from '../../services/detaiProduct';
+import { toast } from 'react-toastify';
 
 const inputs = [
     {
         id: 1,
         className: 'col-6 mb-3',
-        key: 'sim_slot',
+        key: 'sim_slots',
         placeholder: 'Enter no of sim slot...',
         label: 'Sim Slot',
     },
@@ -34,6 +37,7 @@ const inputs = [
 const createSelects = (params) => {
     return [
         {
+            state: 'osID',
             id: 1,
             className: 'col-6 mb-3',
             key: keyMaps.OS,
@@ -42,6 +46,7 @@ const createSelects = (params) => {
         },
         {
             id: 2,
+            state: 'batteryID',
             className: 'col-6 mb-3',
             key: keyMaps.BATTERY,
             label: 'Battery Type',
@@ -49,6 +54,7 @@ const createSelects = (params) => {
         },
         {
             id: 4,
+            state: 'brandID',
             className: 'col-6 mb-3',
             key: keyMaps.BRAND,
             label: 'Brand Type',
@@ -56,28 +62,44 @@ const createSelects = (params) => {
         },
         {
             id: 5,
+            state: 'featureID',
             className: 'col-6 mb-3',
             key: keyMaps.FEATURE,
             label: 'Feature Type',
             setState: params.setSelectFeature,
         },
+        {
+            id: 6,
+            state: 'screenID',
+            className: 'col-6 mb-3',
+            key: keyMaps.SCREEN,
+            label: 'Screen Type',
+            setState: params.setSelectScreen,
+        },
     ];
 };
 
-const DetailProduct = () => {
+const info = {
+    contentHTML: '',
+    sim_slots: '',
+    batteryText: '',
+    screenText: '',
+    contentMarkdown: '',
+};
+
+const DetailProduct = (props) => {
+    const { match } = props;
     // Selected
     const [selectedOs, setSelectOs] = useState({});
     const [selectedBattery, setSelectBattery] = useState({});
     const [selectedBrand, setSelectBrand] = useState({});
     const [selectedFeature, setSelectFeature] = useState({});
+    const [selectedScreen, setSelectScreen] = useState({});
     const [selects, setSelects] = useState([]);
     const [detail, setDetail] = useState(() => ({
-        contentHTML: '',
-        sim_slots: '',
-        batteryText: '',
-        screenText: '',
-        contentMarkdown: '',
+        ...info,
     }));
+    const [dataFromDb, setDataFromDB] = useState({});
 
     useEffect(() => {
         const group = {
@@ -85,22 +107,85 @@ const DetailProduct = () => {
             setSelectBattery,
             setSelectOs,
             setSelectFeature,
+            setSelectScreen,
         };
         setSelects(createSelects(group));
     }, []);
 
+    useEffect(() => {
+        // Call API get data detail product
+        const getData = async () => {
+            const id = match?.params?.id || 1;
+            handleGetDataFromDB(id);
+        };
+        getData();
+    }, [match]);
+
+    const handleClearData = () => {
+        setDetail({
+            ...info,
+        });
+        setSelectBattery({});
+        setSelectBrand({});
+        setSelectFeature({});
+        setSelectScreen({});
+    };
+
     const handleSetDetail = (key, value) => {
-        console.log(key);
         setDetail((prev) => ({
             ...prev,
             [key]: value,
         }));
     };
 
+    const mapStateToDetailProduct = () => {
+        return {
+            ...detail,
+            osID: selectedOs.value || 'OS1',
+            batteryID: selectedBattery.value || 'BAT1',
+            featureID: selectedFeature.value || 'FEA1',
+            brandID: selectedBrand.value || 'BR1',
+            screenID: selectedScreen.value || 'SCR1',
+            productID: match?.params?.id || 1,
+        };
+    };
+
+    const handleSaveInfo = async () => {
+        const data = mapStateToDetailProduct();
+        const res = await detailProductService.createOrUpdate(data);
+        if (res.data?.code === 0) {
+            toast.success('Detail Product has changed!!!');
+        } else {
+            toast.error('Detail Product update failure!!!');
+        }
+    };
     const mdParser = new MarkdownIt(/* Markdown-it options */);
     const handleEditorChange = ({ html, text }) => {
         console.log('handleEditorChange', html, text);
+        setDetail((prev) => ({
+            ...prev,
+            contentHTML: html,
+            contentMarkdown: text,
+        }));
     };
+
+    const handleGetDataFromDB = async (id) => {
+        const res = await detailProductService.getData(id);
+        console.log(res);
+        if (res.data?.code === 0) {
+            const data = res.data.detail_product;
+            setDetail((prev) => ({
+                ...prev,
+                contentHTML: data.contentHTML,
+                contentMarkdown: data.contentMarkdown,
+                batteryText: data.batteryText,
+                screenText: data.screenText,
+                sim_slots: data.simSlots,
+            }));
+            setDataFromDB(data);
+        }
+    };
+
     return (
         <div className='dp'>
             <div
@@ -123,7 +208,11 @@ const DetailProduct = () => {
                     ))}
                     {selects &&
                         selects.map((item) => (
-                            <DetailProductSelect item={item} key={item.id} />
+                            <DetailProductSelect
+                                item={item}
+                                key={item.id}
+                                dataFromDb={dataFromDb}
+                            />
                         ))}
                 </Row>
                 <Row>
@@ -131,11 +220,15 @@ const DetailProduct = () => {
                         style={{ height: '500px' }}
                         renderHTML={(text) => mdParser.render(text)}
                         onChange={handleEditorChange}
+                        value={detail.contentMarkdown}
                     />
                 </Row>
                 <Row className='my-4'>
                     <Col className='col-12'>
-                        <Button className='btn btn-primary'>
+                        <Button
+                            className='btn btn-primary'
+                            onClick={handleSaveInfo}
+                        >
                             Save Changes
                         </Button>
                     </Col>
@@ -145,4 +238,4 @@ const DetailProduct = () => {
     );
 };
 
-export default DetailProduct;
+export default withRouter(DetailProduct);

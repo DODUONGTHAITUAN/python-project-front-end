@@ -7,7 +7,7 @@ import CommonUtils from '../../../utils/CommonUtils';
 
 const DetailProductSelect = (props) => {
     const [options, setOptions] = useState([]);
-    const { item } = props;
+    const { item, dataFromDb } = props;
 
     const handleGetRoleByKeyMap = async (type, setOptions) => {
         try {
@@ -24,7 +24,7 @@ const DetailProductSelect = (props) => {
     };
     useEffect(() => {
         handleGetRoleByKeyMap(item.key, setOptions);
-    }, []);
+    }, [item]);
 
     return (
         <Col className={item.className}>
@@ -33,7 +33,13 @@ const DetailProductSelect = (props) => {
                 <Select
                     options={options}
                     onChange={item.setState}
-                    // value={options?.length > 0 ? options[0] : {}}
+                    value={
+                        dataFromDb
+                            ? options.find(
+                                  (i) => i.value === dataFromDb[item.state]
+                              )
+                            : {}
+                    }
                 />
             </FormGroup>
         </Col>
